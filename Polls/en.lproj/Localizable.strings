@@ -8,6 +8,7 @@
 
 // Question List
 "QUESTION_LIST_TITLE" = "Questions";
+"QUESTION_LIST_QUESTION_DELETING" = "Deleting";
 
 // Question Detail
 "QUESTION_DETAIL_TITLE" = "Question";

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 
 class QuestionListViewController : UITableViewController {
@@ -67,7 +68,9 @@ class QuestionListViewController : UITableViewController {
   override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     switch editingStyle {
       case .Delete:
+        SVProgressHUD.showWithStatus(NSLocalizedString("QUESTION_LIST_QUESTION_DELETING", comment: ""), maskType: .Gradient)
         viewModel.delete(indexPath.row) {
+          SVProgressHUD.dismiss()
           tableView.reloadData()
         }
         break
