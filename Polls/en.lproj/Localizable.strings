@@ -6,5 +6,10 @@
   Copyright (c) 2015 Apiary. All rights reserved.
 */
 
-
+// Question List
 "QUESTION_LIST_TITLE" = "Questions";
+
+// Question Detail
+"QUESTION_DETAIL_TITLE" = "Question";
+"QUESTION_DETAIL_QUESTION_TITLE" = "Question";
+"QUESTION_DETAIL_CHOICE_LIST_TITLE" = "Choices";
