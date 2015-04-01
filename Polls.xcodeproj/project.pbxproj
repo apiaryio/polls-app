@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		273E7BB51ACC8755006449A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BB41ACC8755006449A1 /* AppDelegate.swift */; };
-		273E7BB71ACC8755006449A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BB61ACC8755006449A1 /* ViewController.swift */; };
-		273E7BBA1ACC8755006449A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BB81ACC8755006449A1 /* Main.storyboard */; };
 		273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BBB1ACC8755006449A1 /* Images.xcassets */; };
 		273E7BBF1ACC8755006449A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */; };
 		273E7BCB1ACC8755006449A1 /* PollsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BCA1ACC8755006449A1 /* PollsTests.swift */; };
+		2755F6DA1ACC8905006A9A44 /* QuestionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D51ACC8905006A9A44 /* QuestionDetailViewController.swift */; };
+		2755F6DB1ACC8905006A9A44 /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D61ACC8905006A9A44 /* QuestionListViewController.swift */; };
+		2755F6DC1ACC8905006A9A44 /* QuestionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D81ACC8905006A9A44 /* QuestionDetailViewModel.swift */; };
+		2755F6DD1ACC8905006A9A44 /* QuestionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D91ACC8905006A9A44 /* QuestionListViewModel.swift */; };
+		2755F6E01ACC913A006A9A44 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2755F6E21ACC913A006A9A44 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +32,16 @@
 		273E7BAF1ACC8755006449A1 /* Polls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Polls.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		273E7BB31ACC8755006449A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		273E7BB41ACC8755006449A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		273E7BB61ACC8755006449A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		273E7BB91ACC8755006449A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		273E7BBB1ACC8755006449A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		273E7BBE1ACC8755006449A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		273E7BC41ACC8755006449A1 /* PollsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PollsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		273E7BC91ACC8755006449A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		273E7BCA1ACC8755006449A1 /* PollsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsTests.swift; sourceTree = "<group>"; };
+		2755F6D51ACC8905006A9A44 /* QuestionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionDetailViewController.swift; sourceTree = "<group>"; };
+		2755F6D61ACC8905006A9A44 /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
+		2755F6D81ACC8905006A9A44 /* QuestionDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionDetailViewModel.swift; sourceTree = "<group>"; };
+		2755F6D91ACC8905006A9A44 /* QuestionListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewModel.swift; sourceTree = "<group>"; };
+		2755F6E11ACC913A006A9A44 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +69,9 @@
 				273E7BC71ACC8755006449A1 /* PollsTests */,
 				273E7BB01ACC8755006449A1 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		273E7BB01ACC8755006449A1 /* Products */ = {
 			isa = PBXGroup;
@@ -78,9 +86,10 @@
 			isa = PBXGroup;
 			children = (
 				273E7BB41ACC8755006449A1 /* AppDelegate.swift */,
-				273E7BB61ACC8755006449A1 /* ViewController.swift */,
-				273E7BB81ACC8755006449A1 /* Main.storyboard */,
+				2755F6D41ACC8905006A9A44 /* View Controllers */,
+				2755F6D71ACC8905006A9A44 /* View Models */,
 				273E7BBB1ACC8755006449A1 /* Images.xcassets */,
+				2755F6E21ACC913A006A9A44 /* Localizable.strings */,
 				273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */,
 				273E7BB21ACC8755006449A1 /* Supporting Files */,
 			);
@@ -110,6 +119,26 @@
 				273E7BC91ACC8755006449A1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2755F6D41ACC8905006A9A44 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2755F6D61ACC8905006A9A44 /* QuestionListViewController.swift */,
+				2755F6D51ACC8905006A9A44 /* QuestionDetailViewController.swift */,
+			);
+			name = "View Controllers";
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2755F6D71ACC8905006A9A44 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				2755F6D91ACC8905006A9A44 /* QuestionListViewModel.swift */,
+				2755F6D81ACC8905006A9A44 /* QuestionDetailViewModel.swift */,
+			);
+			name = "View Models";
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,7 +221,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				273E7BBA1ACC8755006449A1 /* Main.storyboard in Resources */,
+				2755F6E01ACC913A006A9A44 /* Localizable.strings in Resources */,
 				273E7BBF1ACC8755006449A1 /* LaunchScreen.xib in Resources */,
 				273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */,
 			);
@@ -212,7 +241,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				273E7BB71ACC8755006449A1 /* ViewController.swift in Sources */,
+				2755F6DB1ACC8905006A9A44 /* QuestionListViewController.swift in Sources */,
+				2755F6DA1ACC8905006A9A44 /* QuestionDetailViewController.swift in Sources */,
+				2755F6DD1ACC8905006A9A44 /* QuestionListViewModel.swift in Sources */,
+				2755F6DC1ACC8905006A9A44 /* QuestionDetailViewModel.swift in Sources */,
 				273E7BB51ACC8755006449A1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,20 +268,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		273E7BB81ACC8755006449A1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				273E7BB91ACC8755006449A1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				273E7BBE1ACC8755006449A1 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		2755F6E21ACC913A006A9A44 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2755F6E11ACC913A006A9A44 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -405,6 +437,7 @@
 				273E7BD01ACC8755006449A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		273E7BD11ACC8755006449A1 /* Build configuration list for PBXNativeTarget "PollsTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +446,7 @@
 				273E7BD31ACC8755006449A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
