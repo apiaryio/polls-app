@@ -16,6 +16,7 @@
 		2755F6DC1ACC8905006A9A44 /* QuestionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D81ACC8905006A9A44 /* QuestionDetailViewModel.swift */; };
 		2755F6DD1ACC8905006A9A44 /* QuestionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D91ACC8905006A9A44 /* QuestionListViewModel.swift */; };
 		2755F6E01ACC913A006A9A44 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2755F6E21ACC913A006A9A44 /* Localizable.strings */; };
+		4240BA9FF449C3FC8E90D46C /* Pods_Polls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0746BA6A152BE434B277F6 /* Pods_Polls.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,9 @@
 		2755F6D81ACC8905006A9A44 /* QuestionDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionDetailViewModel.swift; sourceTree = "<group>"; };
 		2755F6D91ACC8905006A9A44 /* QuestionListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewModel.swift; sourceTree = "<group>"; };
 		2755F6E11ACC913A006A9A44 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8471C9C09E565A049BA90123 /* Pods-Polls.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Polls.release.xcconfig"; path = "Pods/Target Support Files/Pods-Polls/Pods-Polls.release.xcconfig"; sourceTree = "<group>"; };
+		B8C3985473860D4F63FF3709 /* Pods-Polls.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Polls.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Polls/Pods-Polls.debug.xcconfig"; sourceTree = "<group>"; };
+		CE0746BA6A152BE434B277F6 /* Pods_Polls.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Polls.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4240BA9FF449C3FC8E90D46C /* Pods_Polls.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +73,8 @@
 				273E7BB11ACC8755006449A1 /* Polls */,
 				273E7BC71ACC8755006449A1 /* PollsTests */,
 				273E7BB01ACC8755006449A1 /* Products */,
+				79EACC82DB9295E6B64D8596 /* Pods */,
+				E10632ADECDD94151EB4D229 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -141,6 +148,23 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		79EACC82DB9295E6B64D8596 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B8C3985473860D4F63FF3709 /* Pods-Polls.debug.xcconfig */,
+				8471C9C09E565A049BA90123 /* Pods-Polls.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E10632ADECDD94151EB4D229 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE0746BA6A152BE434B277F6 /* Pods_Polls.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,9 +172,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 273E7BCE1ACC8755006449A1 /* Build configuration list for PBXNativeTarget "Polls" */;
 			buildPhases = (
+				5DE2493D868D8C5F3DA59FC0 /* Check Pods Manifest.lock */,
 				273E7BAB1ACC8755006449A1 /* Sources */,
 				273E7BAC1ACC8755006449A1 /* Frameworks */,
 				273E7BAD1ACC8755006449A1 /* Resources */,
+				83210E18327A5E708626B1C3 /* Embed Pods Frameworks */,
+				E402AC51F76FE98DA8D788F9 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -235,6 +262,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5DE2493D868D8C5F3DA59FC0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		83210E18327A5E708626B1C3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Polls/Pods-Polls-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E402AC51F76FE98DA8D788F9 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Polls/Pods-Polls-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		273E7BAB1ACC8755006449A1 /* Sources */ = {
@@ -366,6 +441,7 @@
 		};
 		273E7BCF1ACC8755006449A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8C3985473860D4F63FF3709 /* Pods-Polls.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Polls/Info.plist;
@@ -376,6 +452,7 @@
 		};
 		273E7BD01ACC8755006449A1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8471C9C09E565A049BA90123 /* Pods-Polls.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Polls/Info.plist;

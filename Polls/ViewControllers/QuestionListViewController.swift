@@ -17,10 +17,22 @@ class QuestionListViewController : UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = NSLocalizedString("QUESTION_LIST_TITLE", comment: "")
-    reloadInterface()
+
+    refreshControl = UIRefreshControl()
+    refreshControl!.addTarget(self, action:Selector("loadData"), forControlEvents:.ValueChanged)
+    loadData()
   }
 
   // MARK: Other
+
+  func loadData() {
+    refreshControl!.beginRefreshing()
+
+    viewModel.loadData {
+      self.refreshControl!.endRefreshing()
+      self.reloadInterface()
+    }
+  }
 
   func reloadInterface() {
     tableView.reloadData()

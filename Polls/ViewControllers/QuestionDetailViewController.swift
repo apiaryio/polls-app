@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 
 class QuestionDetailViewController : UITableViewController {
@@ -35,6 +36,7 @@ class QuestionDetailViewController : UITableViewController {
     if section == 0 {
       return 1
     }
+
     return viewModel?.numberOfChoices() ?? 0
   }
 
@@ -61,8 +63,10 @@ class QuestionDetailViewController : UITableViewController {
 
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     if indexPath.section == 1 && viewModel!.canVote(indexPath.row) {
+      SVProgressHUD.showWithStatus(NSLocalizedString("QUESTION_DETAIL_CHOICE_VOTING", comment: ""), maskType: .Gradient)
       viewModel?.vote(indexPath.row) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        SVProgressHUD.dismiss()
+        tableView.reloadData()
       }
     } else {
       tableView.deselectRowAtIndexPath(indexPath, animated: true)
