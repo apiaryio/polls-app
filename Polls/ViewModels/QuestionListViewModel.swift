@@ -59,11 +59,25 @@ class QuestionListViewModel {
   }
 
   func canDeleteQuestion(index:Int) -> Bool {
-    return false
+    let transition = questions?[index].transitions["delete"]
+    return transition != nil
   }
 
   func delete(index:Int, completion:(() -> ())) {
-    completion()
+    if let transition = questions?[index].transitions["delete"] {
+      manager.request(transition).response { _, response, _, _ in
+        if response?.statusCode >= 200 && response?.statusCode < 400 {
+          // 🐵 🔧 the updated representor
+          var questions = self.questions!
+          questions.removeAtIndex(index)
+          self.representor = Representor(transitions: self.representor?.transitions, representors: ["questions": questions], attributes: self.representor?.attributes)
+        }
+
+        completion()
+      }
+    } else {
+      completion()
+    }
   }
 
   func questionDetailViewModel(index:Int) -> QuestionDetailViewModel {
