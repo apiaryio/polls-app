@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import Alamofire
 import Representor
+import Hyperdrive
 
 
 class QuestionListViewModel {
@@ -18,38 +18,72 @@ class QuestionListViewModel {
     return representor?.representors["questions"]
   }
 
-  private var manager:Client = {
-    var defaultHeaders = Alamofire.Manager.sharedInstance.session.configuration.HTTPAdditionalHeaders ?? [:]
-    defaultHeaders["Accept"] = "application/vnd.siren+json"
-
-    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-    configuration.HTTPAdditionalHeaders =  defaultHeaders
-
-    return Client(configuration: configuration)
-  }()
+  private var hyperdrive:Hyperdrive = Hyperdrive()
 
   init() {}
 
   func loadData(completion:(() -> ())) {
-    manager.request(.GET, manager.baseURL).responseRepresentor { (_, _, representor, error) in
-      if let link = representor?.links["questions"] {
-        self.manager.request(.GET, link).responseRepresentor { _, _, representor, error in
-          if let representor = representor? {
-            self.representor = representor
-          } else {
-            println("Failure to retrieve questions: \(error)")
-          }
+    let useBlueprintAPI = true
+    if useBlueprintAPI {
+      loadBlueprint(completion)
+    } else {
+      loadHypermedia(completion)
+    }
+  }
 
+  // MARK: API
+
+  func loadHypermedia(completion:(() -> ())) {
+    hyperdrive.enter("https://polls.apiblueprint.org/") { result in
+      switch result {
+      case .Success(let representor):
+        if let questions = representor.links["questions"] {
+          self.loadQuestions(questions, completion: completion)
+        } else {
+          println("API does not support questions.")
           completion()
         }
-      } else {
-        println("Failure to retrieve root: \(error)")
+
+      case .Failure(let error):
+        println("Failed to retrieve root \(error)")
         completion()
       }
     }
   }
 
-  // MARK: -
+  func loadBlueprint(completion:(() -> ())) {
+    HyperBlueprint.enter(apiary: "pollsmeetup") { result in
+      switch result {
+      case .Success(let hyperdrive, let representor):
+        self.hyperdrive = hyperdrive
+        if let questions = representor.links["questions"] {
+          self.loadQuestions(questions, completion: completion)
+        } else {
+          println("API does not support questions.")
+          completion()
+        }
+
+      case .Failure(let error):
+        println("Failed to retrieve root \(error)")
+        completion()
+      }
+    }
+  }
+
+  func loadQuestions(uri:String, completion:(() -> ())) {
+    hyperdrive.request(uri) { result in
+      switch result {
+      case .Success(let representor):
+        self.representor = representor
+        completion()
+      case .Failure(let error):
+        println("Failure to retrieve questions: \(error)")
+        completion()
+      }
+    }
+  }
+
+  // MARK: Public
 
   var canCreateQuestion:Bool {
     return representor?.transitions["create"] != nil
@@ -57,7 +91,7 @@ class QuestionListViewModel {
 
   func createQuestionViewModel() -> CreateQuestionViewModel? {
     if let transition = representor?.transitions["create"] {
-      return CreateQuestionViewModel(manager: manager, transition: transition)
+      return CreateQuestionViewModel(hyperdrive: hyperdrive, transition: transition)
     }
 
     return nil
@@ -79,12 +113,14 @@ class QuestionListViewModel {
 
   func delete(index:Int, completion:(() -> ())) {
     if let transition = questions?[index].transitions["delete"] {
-      manager.request(transition).response { _, response, _, _ in
-        if response?.statusCode >= 200 && response?.statusCode < 400 {
-          // 🐵 🔧 the updated representor
+      hyperdrive.request(transition) { result in
+        switch result {
+        case .Success(let representor):
           var questions = self.questions!
           questions.removeAtIndex(index)
           self.representor = Representor(transitions: self.representor?.transitions, representors: ["questions": questions], attributes: self.representor?.attributes)
+        case .Failure(let error):
+          println("Failed to delete: \(error)")
         }
 
         completion()
@@ -95,6 +131,6 @@ class QuestionListViewModel {
   }
 
   func questionDetailViewModel(index:Int) -> QuestionDetailViewModel {
-    return QuestionDetailViewModel(manager: manager, representor: questions![index])
+    return QuestionDetailViewModel(hyperdrive: hyperdrive, representor: questions![index])
   }
 }

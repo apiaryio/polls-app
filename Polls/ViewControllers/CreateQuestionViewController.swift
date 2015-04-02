@@ -26,6 +26,7 @@ class CreateQuestionViewController : UITableViewController {
     title = NSLocalizedString("QUESTION_CREATE_TITLE", comment: "")
     navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close:")
     navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "save:")
+    validate()
   }
 
   func close(sender:AnyObject) {
@@ -36,7 +37,7 @@ class CreateQuestionViewController : UITableViewController {
     SVProgressHUD.showInfoWithStatus(NSLocalizedString("QUESTION_CREATE_CREATING", comment: ""), maskType: .Gradient)
 
     func nonEmpty(choice:String) -> Bool {
-      return countElements(choice) > 0
+      return count(choice) > 0
     }
 
     viewModel?.create(question, choices: filter(choices, nonEmpty)) {
@@ -48,6 +49,11 @@ class CreateQuestionViewController : UITableViewController {
 
       self.dismissViewControllerAnimated(true, completion: nil)
     }
+  }
+
+  func validate() {
+    let valid = viewModel?.validate(question: question) ?? false
+    navigationItem.rightBarButtonItem?.enabled = valid
   }
 
   // MARK: UITableViewDelegate/Source
@@ -83,6 +89,7 @@ class CreateQuestionViewController : UITableViewController {
     if indexPath.section == 1 && indexPath.row == choices.count {
       choices.append("")
       tableView.reloadData()
+      validate()
     }
   }
 
@@ -102,6 +109,7 @@ class CreateQuestionViewController : UITableViewController {
     cell.textField.text = question
     cell.block = {[unowned self] in
       self.question = cell.textField.text
+      self.validate()
     }
     return cell
   }
