@@ -18,22 +18,22 @@ class QuestionListViewModel {
     return representor?.representors["questions"]
   }
 
-  private var manager:Client = {
-    var defaultHeaders = Alamofire.Manager.sharedInstance.session.configuration.HTTPAdditionalHeaders ?? [:]
-    defaultHeaders["Accept"] = "application/vnd.siren+json"
-
-    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-    configuration.HTTPAdditionalHeaders =  defaultHeaders
-
-    return Client(configuration: configuration)
-  }()
+  private var manager:Client?
 
   init() {}
 
   func loadData(completion:(() -> ())) {
-    manager.request(.GET, manager.baseURL).responseRepresentor { (_, _, representor, error) in
+//    loadHypermedia(completion)
+    loadBlueprint(completion)
+  }
+
+    // MARK: API
+
+  func loadHypermedia(completion:(() -> ())) {
+    loadClient("http://polls.apiblueprint.org/") { client, representor in
+      self.manager = client
       if let link = representor?.links["questions"] {
-        self.manager.request(.GET, link).responseRepresentor { _, _, representor, error in
+        self.manager?.request(.GET, link).responseRepresentor { _, _, representor, error in
           if let representor = representor? {
             self.representor = representor
           } else {
@@ -43,13 +43,33 @@ class QuestionListViewModel {
           completion()
         }
       } else {
-        println("Failure to retrieve root: \(error)")
+        println("Failure to retrieve root")
         completion()
       }
     }
   }
 
-  // MARK: -
+  func loadBlueprint(completion:(() -> ())) {
+    loadBlueprintClient("http://polls.apiblueprint.org", "pollsapi") { client, representor in
+      self.manager = client
+      if let link = representor?.links["questions"] {
+        self.manager?.request(.GET, link).response { req, res, data, error in
+          if let data = data as? NSData {
+            self.representor = client!.blueprint?.toRepresentor(req, response: res!, data: data)
+          } else {
+            println("Failure to retrieve questions: \(error)")
+          }
+
+          completion()
+        }
+      } else {
+        println("Failure to retrieve root")
+        completion()
+      }
+    }
+  }
+
+  // MARK: Public
 
   var canCreateQuestion:Bool {
     return representor?.transitions["create"] != nil
@@ -57,7 +77,7 @@ class QuestionListViewModel {
 
   func createQuestionViewModel() -> CreateQuestionViewModel? {
     if let transition = representor?.transitions["create"] {
-      return CreateQuestionViewModel(manager: manager, transition: transition)
+      return CreateQuestionViewModel(manager: manager!, transition: transition)
     }
 
     return nil
@@ -79,7 +99,7 @@ class QuestionListViewModel {
 
   func delete(index:Int, completion:(() -> ())) {
     if let transition = questions?[index].transitions["delete"] {
-      manager.request(transition).response { _, response, _, _ in
+      manager?.request(transition).response { _, response, _, _ in
         if response?.statusCode >= 200 && response?.statusCode < 400 {
           // 🐵 🔧 the updated representor
           var questions = self.questions!
@@ -95,6 +115,6 @@ class QuestionListViewModel {
   }
 
   func questionDetailViewModel(index:Int) -> QuestionDetailViewModel {
-    return QuestionDetailViewModel(manager: manager, representor: questions![index])
+    return QuestionDetailViewModel(manager: manager!, representor: questions![index])
   }
 }

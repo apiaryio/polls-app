@@ -19,6 +19,7 @@
 		279D63811ACD55BE0024E2BC /* CreateQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63801ACD55BE0024E2BC /* CreateQuestionViewModel.swift */; };
 		279D63831ACD571F0024E2BC /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63821ACD571F0024E2BC /* CreateQuestionViewController.swift */; };
 		279D63911ACD5DB60024E2BC /* TableTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D63901ACD5DB60024E2BC /* TableTextViewCell.m */; };
+		279D637F1ACCE17D0024E2BC /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D637E1ACCE17D0024E2BC /* Agent.swift */; };
 		4240BA9FF449C3FC8E90D46C /* Pods_Polls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0746BA6A152BE434B277F6 /* Pods_Polls.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		279D638B1ACD5DA20024E2BC /* Polls-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Polls-Bridging-Header.h"; sourceTree = "<group>"; };
 		279D638F1ACD5DB60024E2BC /* TableTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableTextViewCell.h; sourceTree = "<group>"; };
 		279D63901ACD5DB60024E2BC /* TableTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableTextViewCell.m; sourceTree = "<group>"; };
+		279D637E1ACCE17D0024E2BC /* Agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
 		8471C9C09E565A049BA90123 /* Pods-Polls.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Polls.release.xcconfig"; path = "Pods/Target Support Files/Pods-Polls/Pods-Polls.release.xcconfig"; sourceTree = "<group>"; };
 		B8C3985473860D4F63FF3709 /* Pods-Polls.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Polls.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Polls/Pods-Polls.debug.xcconfig"; sourceTree = "<group>"; };
 		CE0746BA6A152BE434B277F6 /* Pods_Polls.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Polls.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				273E7BB41ACC8755006449A1 /* AppDelegate.swift */,
+				279D637E1ACCE17D0024E2BC /* Agent.swift */,
 				2755F6D41ACC8905006A9A44 /* View Controllers */,
 				2755F6D71ACC8905006A9A44 /* View Models */,
 				279D63841ACD5CEF0024E2BC /* Views */,
@@ -342,6 +345,7 @@
 				2755F6DA1ACC8905006A9A44 /* QuestionDetailViewController.swift in Sources */,
 				279D63831ACD571F0024E2BC /* CreateQuestionViewController.swift in Sources */,
 				2755F6DD1ACC8905006A9A44 /* QuestionListViewModel.swift in Sources */,
+				279D637F1ACCE17D0024E2BC /* Agent.swift in Sources */,
 				2755F6DC1ACC8905006A9A44 /* QuestionDetailViewModel.swift in Sources */,
 				279D63911ACD5DB60024E2BC /* TableTextViewCell.m in Sources */,
 				273E7BB51ACC8755006449A1 /* AppDelegate.swift in Sources */,
