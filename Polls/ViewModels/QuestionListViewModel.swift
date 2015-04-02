@@ -49,6 +49,20 @@ class QuestionListViewModel {
     }
   }
 
+  // MARK: -
+
+  var canCreateQuestion:Bool {
+    return representor?.transitions["create"] != nil
+  }
+
+  func createQuestionViewModel() -> CreateQuestionViewModel? {
+    if let transition = representor?.transitions["create"] {
+      return CreateQuestionViewModel(manager: manager, transition: transition)
+    }
+
+    return nil
+  }
+
   func numberOfQuestions() -> Int {
     return questions?.count ?? 0
   }

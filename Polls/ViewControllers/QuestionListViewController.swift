@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 
 
-class QuestionListViewController : UITableViewController {
+class QuestionListViewController : UITableViewController, QuestionDetailViewControllerDelegate {
   var viewModel = QuestionListViewModel()
 
   // MARK: View life-cycle
@@ -32,11 +32,27 @@ class QuestionListViewController : UITableViewController {
     viewModel.loadData {
       self.refreshControl!.endRefreshing()
       self.reloadInterface()
+
+      if self.viewModel.canCreateQuestion {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createQuestion:")
+      } else {
+        self.navigationItem.rightBarButtonItem = nil
+      }
     }
   }
 
   func reloadInterface() {
     tableView.reloadData()
+  }
+
+  func createQuestion(sender:AnyObject) {
+    if let viewModel = viewModel.createQuestionViewModel() {
+      let viewController = CreateQuestionViewController(style: .Grouped)
+      viewController.delegate = self
+      viewController.viewModel = viewModel
+
+      presentViewController(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+    }
   }
 
   // MARK: UITableViewDelegate
@@ -79,5 +95,11 @@ class QuestionListViewController : UITableViewController {
       case .None:
         break
     }
+  }
+
+  // MARK: QuestionDetailViewControllerDelegate
+
+  func didCreateQuestion(viewController:CreateQuestionViewController) {
+    loadData()
   }
 }

@@ -34,7 +34,7 @@ class Client : Manager {
 
   func request(transition: HTTPTransition, parameters: [String : AnyObject]? = nil, attributes: [String : AnyObject]? = nil) -> Request {
     let base = NSURL(string: baseURL)
-    return super.request(base, transition: transition, parameters: parameters, attributes: attributes, encoding: nil)
+    return super.request(base, transition: transition, parameters: parameters, attributes: attributes, encoding: .JSON)
   }
 }
 
