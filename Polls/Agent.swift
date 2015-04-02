@@ -161,6 +161,8 @@ extension Blueprint {
                   self.JSONObjectToRepresentor(element, builder: builder)
                 }
               }
+
+              self.addTransitions(uri, builder: builder)
             } else if let json = json as? [String:AnyObject] {
               self.JSONObjectToRepresentor(json, builder: builder)
             }
@@ -193,17 +195,21 @@ extension Blueprint {
       }.first
   }
 
-  func JSONObjectToRepresentor(entity:[String:AnyObject], builder:RepresentorBuilder<HTTPTransition>) {
-    if let url = entity["url"] as? String {
-      if let resource = resourceForURI(url) {
-        for action in resource.actions {
-          if let relation = relationForURI(url, method: action.method) {
-            builder.addTransition(relation, uri: url) { builder in
-              builder.method = action.method
-            }
+  func addTransitions(url:String, builder:RepresentorBuilder<HTTPTransition>) {
+    if let resource = resourceForURI(url) {
+      for action in resource.actions {
+        if let relation = relationForURI(url, method: action.method) {
+          builder.addTransition(relation, uri: url) { builder in
+            builder.method = action.method
           }
         }
       }
+    }
+  }
+
+  func JSONObjectToRepresentor(entity:[String:AnyObject], builder:RepresentorBuilder<HTTPTransition>) {
+    if let url = entity["url"] as? String {
+      addTransitions(url, builder: builder)
     }
 
     for (key, value) in entity {
@@ -249,6 +255,9 @@ extension Blueprint {
     // this should come from the relation field in the blueprint, but since api.apiblueprint.org doesnt support, use our own implementation
 
     let uris = [
+      "/questions": [
+        "POST": "create"
+      ],
       "/questions/{question_id}": [
         "DELETE": "delete"
       ],
