@@ -238,7 +238,11 @@ extension Blueprint {
   }
 
   func relationForURI(uri:String) -> String? {
-    // this should come from the relation field in the blueprint, but since api.apiblueprint.org doesnt support, use our own implementation
+    if let relation = relationForURI(uri, method: "GET") {
+      return relation
+    }
+
+    // this should come from the relation field in the blueprint, but since api.apiblueprint.org doesnt support, use our own implementation as fallback:
 
     let uris = [
       "/questions": "questions",
@@ -252,7 +256,14 @@ extension Blueprint {
   }
 
   func relationForURI(uri:String, method:String) -> String? {
-    // this should come from the relation field in the blueprint, but since api.apiblueprint.org doesnt support, use our own implementation
+    if let resource = resourceForURI(uri) {
+      let actions = resource.actions.filter { $0.method == method && $0.relation != nil && countElements($0.relation!) > 0 }
+      if let action = actions.first {
+        return action.relation
+      }
+    }
+
+    // this should come from the relation field in the blueprint, but since api.apiblueprint.org doesnt support, use our own implementation as fallback:
 
     let uris = [
       "/questions": [
