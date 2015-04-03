@@ -30,7 +30,7 @@ PODS:
   - Representor/HTTP/Transition (0.3.0):
     - Representor/Core
   - SVProgressHUD (1.1.3)
-  - URITemplate (1.1.0)
+  - URITemplate (1.1.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -41,6 +41,6 @@ SPEC CHECKSUMS:
   Alamofire: 6a2cbaebe78a6d469bc55ee37f0a24ba22af76ac
   Representor: 26429e85909421fc07cc6be92d2f3d3df8a396cf
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  URITemplate: 4eca238bb7afa9a3626e471a5766351cef7069d3
+  URITemplate: 702714d5d0120400fc22a4271e066c123e75d01a
 
 COCOAPODS: 0.36.3

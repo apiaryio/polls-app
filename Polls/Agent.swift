@@ -198,18 +198,8 @@ extension Blueprint {
 
   func resourceForURI(uri:String) -> Resource? {
     let resources = reduce(map(resourceGroups) { $0.resources }, [], +)
-    let sortedResources = resources.sorted { lhs, rhs in
-      // This is pretty strange, but URITemplate extraction has a bug.
-      // This workaround simply orders them in a way to prevent the bug from being exposed
-      return lhs.uriTemplate.utf16Count > rhs.uriTemplate.utf16Count
-    }
-    return sortedResources.filter {
-      var uriTemplate = $0.uriTemplate
-      if $0.uriTemplate.hasSuffix("{?page}") {   // URITemplate has a bug and ?page exposes it...
-        uriTemplate.stringByReplacingOccurrencesOfString("{?page}", withString: "", options: NSStringCompareOptions(0), range: nil)
-      }
-
-      let template = URITemplate(template: uriTemplate)
+    return resources.filter {
+      let template = URITemplate(template: $0.uriTemplate)
       let extract = template.extract(uri)
       return extract != nil
       }.first
