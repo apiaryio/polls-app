@@ -50,7 +50,7 @@ class QuestionListViewModel {
   }
 
   func loadBlueprint(completion:(() -> ())) {
-    loadBlueprintClient("http://polls.apiblueprint.org", "pollsapi") { client, representor in
+    loadBlueprintClient(nil, "pollsdemo") { client, representor in
       self.manager = client
       if let link = representor?.links["questions"] {
         self.manager?.request(.GET, link).response { req, res, data, error in

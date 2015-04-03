@@ -27,7 +27,7 @@ func loadClient(url:String, completion:((Client, Representor<HTTPTransition>?) -
 }
 
 
-func loadBlueprintClient(baseURL:String, blueprint:String, completion:((Client?, Representor<HTTPTransition>?) -> ())) {
+func loadBlueprintClient(baseURL:String?, blueprint:String, completion:((Client?, Representor<HTTPTransition>?) -> ())) {
   let url = "https://jsapi.apiary.io/apis/\(blueprint).apib"
 
   request(.GET, url).response { _, _, data, _ in
@@ -40,7 +40,7 @@ func loadBlueprintClient(baseURL:String, blueprint:String, completion:((Client?,
 }
 
 
-func loadBlueprintMarkdown(baseURL:String, data:NSData, completion:((Client?, Representor<HTTPTransition>?) -> ())) {
+func loadBlueprintMarkdown(baseURL:String?, data:NSData, completion:((Client?, Representor<HTTPTransition>?) -> ())) {
   let encoding = ParameterEncoding.Custom { URLRequest, _ -> (NSURLRequest, NSError?) in
     var mutableURLRequest: NSMutableURLRequest! = URLRequest.URLRequest.mutableCopy() as NSMutableURLRequest
     mutableURLRequest.setValue("text/vnd.apiblueprint+markdown; version=1A", forHTTPHeaderField: "Content-Type")
@@ -48,11 +48,20 @@ func loadBlueprintMarkdown(baseURL:String, data:NSData, completion:((Client?, Re
     return (mutableURLRequest, nil)
   }
 
-  request(.POST, "http://api.apiblueprint.org/parser", parameters:["dummy": "because apparently custom encoding needs params"], encoding: encoding).responseJSON { _, _, data, _ in
+  //"http://api.apiblueprint.org/parser"
+  request(.POST, "http://localhost:8000/parser", parameters:["dummy": "because apparently custom encoding needs params"], encoding: encoding).responseJSON { _, _, data, _ in
+    var base = baseURL
     if let data = data as? [String: AnyObject] {
       let blueprint = Blueprint(ast: data["ast"] as [String:AnyObject]) // todo what if AST was errored?
       let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-      let client = Client(configuration: configuration, baseURL:baseURL)
+      if let metadata = data["ast"]?["metadata"] as? [[String:String]] {
+        let host = metadata.filter { data in  data["name"]! == "HOST" }.first
+        if let value = host?["value"] {
+          base = value
+        }
+      }
+
+      let client = Client(configuration: configuration, baseURL:base!)
       client.blueprint = blueprint
       completion(client, blueprint.rootRepresentor())
     } else {
@@ -106,6 +115,18 @@ extension Request {
 extension Blueprint {
   /// Find the root resource, it's expected to be a collecton of relations
   func rootRepresentor() -> Representor<HTTPTransition>? {
+    let resources = reduce(map(resourceGroups) { $0.resources }, [], +)
+    return Representor { builder in
+      for resource in resources {
+        let uri = URITemplate(template: resource.uriTemplate).expand([:])
+        let actions = resource.actions.filter { $0.method == "GET" && $0.relation != nil && countElements($0.relation!) > 0 }
+        for action in actions {
+          builder.addLink(action.relation!, uri: uri)
+        }
+      }
+    }
+
+    /*
     func toRepresentor(links:[String:String]) -> Representor<HTTPTransition> {
       return Representor { builder in
         for (key, value) in links {
@@ -137,8 +158,7 @@ extension Blueprint {
         }
       }
     }
-
-    return nil
+  */
   }
 
   /// Below we have a bunch of methods for mapping resources to representors
@@ -252,7 +272,7 @@ extension Blueprint {
     return filter(uris) { (key, value) in
       let template = URITemplate(template: key)
       return template.extract(uri) != nil
-      }.first?.1
+    }.first?.1
   }
 
   func relationForURI(uri:String, method:String) -> String? {
