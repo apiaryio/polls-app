@@ -8,26 +8,25 @@
 
 import Foundation
 import Representor
-import Representor
+import Hyperdrive
 
 class CreateQuestionViewModel {
-  private let manager:Client
+  private let hyperdrive:Hyperdrive
   private var transition:HTTPTransition
 
-  init(manager:Client, transition:HTTPTransition) {
-    self.manager = manager
+  init(hyperdrive:Hyperdrive, transition:HTTPTransition) {
+    self.hyperdrive = hyperdrive
     self.transition = transition
   }
 
   func create(question:String, choices:[String], completion:(() -> ())) {
-    manager.request(transition, attributes: ["question": question, "choices":choices]).response { _, response, _, error in
-      completion()
-
-      if let response = response {
-        println("status code: \(response.statusCode)")
-      }
-      if let error = error {
-        println("Failed to create \(error)")
+    hyperdrive.request(transition, attributes: ["question": question, "choices": choices]) { result in
+      switch result {
+      case .Success(let representor):
+        completion()
+      case .Failure(let error):
+        println("Failure \(error)")
+        completion()
       }
     }
   }
