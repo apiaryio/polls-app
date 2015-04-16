@@ -1,46 +1,51 @@
 PODS:
-  - Alamofire (1.1.4)
-  - Representor (0.3.0):
-    - Representor/Core (= 0.3.0)
-    - Representor/HTTP (= 0.3.0)
-  - Representor/Core (0.3.0)
-  - Representor/HTTP (0.3.0):
-    - Representor/HTTP/Adapters (= 0.3.0)
-    - Representor/HTTP/Alamofire (= 0.3.0)
-    - Representor/HTTP/Deserialization (= 0.3.0)
-    - Representor/HTTP/Transition (= 0.3.0)
-  - Representor/HTTP/Adapters (0.3.0):
-    - Representor/HTTP/Adapters/APIBlueprint (= 0.3.0)
-    - Representor/HTTP/Adapters/HAL (= 0.3.0)
-    - Representor/HTTP/Adapters/Siren (= 0.3.0)
-  - Representor/HTTP/Adapters/APIBlueprint (0.3.0):
+  - Hyperdrive (0.1.0):
+    - Representor (~> 0.4.0)
+    - URITemplate (~> 1.2)
+  - Representor (0.4.0):
+    - Representor/Core (= 0.4.0)
+    - Representor/HTTP (= 0.4.0)
+  - Representor/Core (0.4.0)
+  - Representor/HTTP (0.4.0):
+    - Representor/HTTP/Adapters (= 0.4.0)
+    - Representor/HTTP/Deserialization (= 0.4.0)
+    - Representor/HTTP/Transition (= 0.4.0)
+  - Representor/HTTP/Adapters (0.4.0):
+    - Representor/HTTP/Adapters/APIBlueprint (= 0.4.0)
+    - Representor/HTTP/Adapters/HAL (= 0.4.0)
+    - Representor/HTTP/Adapters/Siren (= 0.4.0)
+  - Representor/HTTP/Adapters/APIBlueprint (0.4.0):
     - Representor/HTTP/Transition
-  - Representor/HTTP/Adapters/HAL (0.3.0):
+  - Representor/HTTP/Adapters/HAL (0.4.0):
     - Representor/HTTP/Transition
-  - Representor/HTTP/Adapters/Siren (0.3.0):
+  - Representor/HTTP/Adapters/Siren (0.4.0):
     - Representor/HTTP/Transition
-  - Representor/HTTP/Alamofire (0.3.0):
-    - Alamofire
-    - Representor/HTTP/Transition
-    - URITemplate
-  - Representor/HTTP/Deserialization (0.3.0):
+  - Representor/HTTP/Deserialization (0.4.0):
     - Representor/HTTP/Adapters/HAL
     - Representor/HTTP/Adapters/Siren
     - Representor/HTTP/Transition
-  - Representor/HTTP/Transition (0.3.0):
+  - Representor/HTTP/Transition (0.4.0):
     - Representor/Core
   - SVProgressHUD (1.1.3)
-  - URITemplate (1.1.1)
+  - URITemplate (1.2.0)
 
 DEPENDENCIES:
-  - Alamofire
-  - Representor
+  - Hyperdrive (from `https://github.com/kylef/Hyperdrive`)
   - SVProgressHUD
 
+EXTERNAL SOURCES:
+  Hyperdrive:
+    :git: https://github.com/kylef/Hyperdrive
+
+CHECKOUT OPTIONS:
+  Hyperdrive:
+    :commit: 28f874825953ed64037b8418c9bf29903f48e36b
+    :git: https://github.com/kylef/Hyperdrive
+
 SPEC CHECKSUMS:
-  Alamofire: 6a2cbaebe78a6d469bc55ee37f0a24ba22af76ac
-  Representor: 26429e85909421fc07cc6be92d2f3d3df8a396cf
+  Hyperdrive: fcc41881e6331c75837adbe62e9114b42f7215f7
+  Representor: 6f0e294e31e12e9f17015bcfc8db443ada00918a
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  URITemplate: 702714d5d0120400fc22a4271e066c123e75d01a
+  URITemplate: 0dbf40f0e378eb9c6d04cc08e6101fb82d126dc3
 
 COCOAPODS: 0.36.3

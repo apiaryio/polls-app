@@ -36,7 +36,7 @@ class CreateQuestionViewController : UITableViewController {
     SVProgressHUD.showInfoWithStatus(NSLocalizedString("QUESTION_CREATE_CREATING", comment: ""), maskType: .Gradient)
 
     func nonEmpty(choice:String) -> Bool {
-      return countElements(choice) > 0
+      return count(choice) > 0
     }
 
     viewModel?.create(question, choices: filter(choices, nonEmpty)) {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import Representor
 import Hyperdrive
 
@@ -19,19 +18,19 @@ class QuestionListViewModel {
     return representor?.representors["questions"]
   }
 
-  private let hyperdrive = Hyperdrive()
+  private var hyperdrive:Hyperdrive = Hyperdrive()
 
   init() {}
 
   func loadData(completion:(() -> ())) {
-    loadHypermedia(completion)
-//    loadBlueprint(completion)
+//    loadHypermedia(completion)
+    loadBlueprint(completion)
   }
 
     // MARK: API
 
   func loadHypermedia(completion:(() -> ())) {
-    hyperdrive.enter("http://localhost:8000/") { result in
+    hyperdrive.enter("https://polls.apiblueprint.org/") { result in
       switch result {
       case .Success(let representor):
         if let questions = representor.links["questions"] {
@@ -48,25 +47,24 @@ class QuestionListViewModel {
     }
   }
 
-//  func loadBlueprint(completion:(() -> ())) {
-//    loadBlueprintClient(nil, "pollsdemo") { client, representor in
-//      self.manager = client
-//      if let link = representor?.links["questions"] {
-//        self.manager?.request(.GET, link).response { req, res, data, error in
-//          if let data = data as? NSData {
-//            self.representor = client!.blueprint?.toRepresentor(req, response: res!, data: data)
-//          } else {
-//            println("Failure to retrieve questions: \(error)")
-//          }
-//
-//          completion()
-//        }
-//      } else {
-//        println("Failure to retrieve root")
-//        completion()
-//      }
-//    }
-//  }
+  func loadBlueprint(completion:(() -> ())) {
+    // pollsdemo
+    hyperdrive.enter("https://polls.apiblueprint.org/") { result in
+      switch result {
+      case .Success(let representor):
+        if let questions = representor.links["questions"] {
+          self.loadQuestions(questions, completion: completion)
+        } else {
+          println("API does not support questions.")
+          completion()
+        }
+
+      case .Failure(let error):
+        println("Failed to retrieve root \(error)")
+        completion()
+      }
+    }
+  }
 
   func loadQuestions(uri:String, completion:(() -> ())) {
     hyperdrive.request(uri) { result in
