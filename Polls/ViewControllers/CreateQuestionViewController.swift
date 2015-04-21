@@ -11,16 +11,23 @@ import SVProgressHUD
 
 
 protocol QuestionDetailViewControllerDelegate {
+  /// Called when the view controller created a new question
   func didCreateQuestion(viewController:CreateQuestionViewController)
 }
 
 
+/// A view controller for creating a new question
 class CreateQuestionViewController : UITableViewController {
+  /// The view model backing this view controller
   var viewModel:CreateQuestionViewModel?
+
+  /** The question view controllers delegate
+  The delegate object is informed when the view controller did create a new question
+  */
   var delegate:QuestionDetailViewControllerDelegate?
 
-  var question = ""
-  var choices = [""]
+  private var question = ""
+  private var choices = [""]
 
   override func viewDidLoad() {
     title = NSLocalizedString("QUESTION_CREATE_TITLE", comment: "")
@@ -29,11 +36,11 @@ class CreateQuestionViewController : UITableViewController {
     validate()
   }
 
-  func close(sender:AnyObject) {
+  private func close(sender:AnyObject) {
     dismissViewControllerAnimated(true, completion: nil)
   }
 
-  func save(sender:AnyObject) {
+  private func save(sender:AnyObject) {
     SVProgressHUD.showInfoWithStatus(NSLocalizedString("QUESTION_CREATE_CREATING", comment: ""), maskType: .Gradient)
 
     func nonEmpty(choice:String) -> Bool {
@@ -51,7 +58,8 @@ class CreateQuestionViewController : UITableViewController {
     }
   }
 
-  func validate() {
+  /// Validate the question with the view model and update the save button state
+  private func validate() {
     let valid = viewModel?.validate(question: question) ?? false
     navigationItem.rightBarButtonItem?.enabled = valid
   }
@@ -103,7 +111,8 @@ class CreateQuestionViewController : UITableViewController {
 
   // MARK: Fields
 
-  func questionCell() -> UITableViewCell {
+  /// Returns a table view cell for editing the question text
+  private func questionCell() -> UITableViewCell {
     let cell = TableTextViewCell(style: .Default, reuseIdentifier: "Question")
     cell.textLabel?.text = NSLocalizedString("QUESTION_CREATE_QUESTION", comment: "")
     cell.textField.text = question
@@ -114,7 +123,8 @@ class CreateQuestionViewController : UITableViewController {
     return cell
   }
 
-  func choiceCell(index:Int) -> UITableViewCell {
+  /// Returns a table view cell for editing a choice at the given index
+  private func choiceCell(index:Int) -> UITableViewCell {
     let cell = TableTextViewCell(style: .Default, reuseIdentifier: "Choice")
     cell.textLabel?.text = "\(index + 1)"
     cell.textField?.text = choices[index]
@@ -124,7 +134,8 @@ class CreateQuestionViewController : UITableViewController {
     return cell
   }
 
-  func addChoiceCell() -> UITableViewCell {
+  /// Returns a cell for creating a new choice
+  private func addChoiceCell() -> UITableViewCell {
     let cell = UITableViewCell(style: .Default, reuseIdentifier: "Add")
     cell.textLabel?.text = NSLocalizedString("QUESTION_CREATE_CHOICE_ADD", comment: "")
     return cell

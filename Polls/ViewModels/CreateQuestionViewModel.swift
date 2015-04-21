@@ -10,6 +10,8 @@ import Foundation
 import Representor
 import Hyperdrive
 
+
+/// A view model for creating a question
 class CreateQuestionViewModel {
   private let hyperdrive:Hyperdrive
   private var transition:HTTPTransition
@@ -19,6 +21,7 @@ class CreateQuestionViewModel {
     self.transition = transition
   }
 
+  /// Validates if the given question is valid
   func validate(# question:String) -> Bool {
     if let attribute = transition.attributes["question"] {
       let required = attribute.required ?? false
@@ -30,6 +33,7 @@ class CreateQuestionViewModel {
     return true
   }
 
+  /// Asyncronously creates a question with the given choices calling a completion closure when complete
   func create(question:String, choices:[String], completion:(() -> ())) {
     hyperdrive.request(transition, attributes: ["question": question, "choices": choices]) { result in
       switch result {

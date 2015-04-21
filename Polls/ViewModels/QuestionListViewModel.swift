@@ -11,19 +11,23 @@ import Representor
 import Hyperdrive
 
 
+/// View model for a collection of questions
 class QuestionListViewModel {
+  private var hyperdrive:Hyperdrive = Hyperdrive()
   private var representor:Representor<HTTPTransition>?
 
   private var questions:[Representor<HTTPTransition>]? {
     return representor?.representors["questions"]
   }
 
-  private var hyperdrive:Hyperdrive = Hyperdrive()
-
   init() {}
 
+  /// Calling this method will download the questions from an API
   func loadData(completion:(() -> ())) {
+    // The following boolean value may be changed to switch from using
+    // the API Blueprint to using the Hypermedia variant of the polls API
     let useBlueprintAPI = true
+
     if useBlueprintAPI {
       loadBlueprint(completion)
     } else {
@@ -31,9 +35,10 @@ class QuestionListViewModel {
     }
   }
 
-  // MARK: API
+  // MARK: Loading data from the API
 
-  func loadHypermedia(completion:(() -> ())) {
+  /// Load the root API resource using Hypermedia
+  private func loadHypermedia(completion:(() -> ())) {
     hyperdrive.enter("https://polls.apiblueprint.org/") { result in
       switch result {
       case .Success(let representor):
@@ -51,7 +56,8 @@ class QuestionListViewModel {
     }
   }
 
-  func loadBlueprint(completion:(() -> ())) {
+  /// Load the available API features using an API Blueprint
+  private func loadBlueprint(completion:(() -> ())) {
     HyperBlueprint.enter(apiary: "pollsmeetup") { result in
       switch result {
       case .Success(let hyperdrive, let representor):
@@ -70,7 +76,8 @@ class QuestionListViewModel {
     }
   }
 
-  func loadQuestions(uri:String, completion:(() -> ())) {
+  /// Load the questions from the given URI
+  private func loadQuestions(uri:String, completion:(() -> ())) {
     hyperdrive.request(uri) { result in
       switch result {
       case .Success(let representor):
@@ -83,12 +90,14 @@ class QuestionListViewModel {
     }
   }
 
-  // MARK: Public
+  // MARK: API for the View Model
 
+  /// Returns whether the user may create a question
   var canCreateQuestion:Bool {
     return representor?.transitions["create"] != nil
   }
 
+  /// Returns a view model for creating a question if the user may create a question
   func createQuestionViewModel() -> CreateQuestionViewModel? {
     if let transition = representor?.transitions["create"] {
       return CreateQuestionViewModel(hyperdrive: hyperdrive, transition: transition)
@@ -97,20 +106,27 @@ class QuestionListViewModel {
     return nil
   }
 
+  /// Returns the number of loaded questions
   func numberOfQuestions() -> Int {
     return questions?.count ?? 0
   }
 
+  /// Returns the question text for a question index
   func question(index:Int) -> String {
     let question = questions?[index].attributes["question"] as? String
     return question ?? "Question"
   }
 
+  /// Returns whether the user may delete the question at the given index
   func canDeleteQuestion(index:Int) -> Bool {
     let transition = questions?[index].transitions["delete"]
     return transition != nil
   }
 
+  /** Asyncronously delete a question at the given index
+  :param: index The question index
+  :param: completion A completion closure to call once the operation is complete
+  */
   func delete(index:Int, completion:(() -> ())) {
     if let transition = questions?[index].transitions["delete"] {
       hyperdrive.request(transition) { result in
@@ -130,6 +146,7 @@ class QuestionListViewModel {
     }
   }
 
+  /// Returns a view model for the given question index
   func questionDetailViewModel(index:Int) -> QuestionDetailViewModel {
     return QuestionDetailViewModel(hyperdrive: hyperdrive, representor: questions![index])
   }

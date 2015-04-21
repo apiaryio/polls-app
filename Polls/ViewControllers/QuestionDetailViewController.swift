@@ -10,7 +10,9 @@ import UIKit
 import SVProgressHUD
 
 
+/// A view controller for showing specific questions
 class QuestionDetailViewController : UITableViewController {
+  /// The view model backing this view controller
   var viewModel:QuestionDetailViewModel? {
     didSet {
       if isViewLoaded() {
@@ -63,11 +65,8 @@ class QuestionDetailViewController : UITableViewController {
 
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     if indexPath.section == 1 && viewModel!.canVote(indexPath.row) {
-      SVProgressHUD.showWithStatus(NSLocalizedString("QUESTION_DETAIL_CHOICE_VOTING", comment: ""), maskType: .Gradient)
-      viewModel?.vote(indexPath.row) {
-        SVProgressHUD.dismiss()
-        tableView.reloadData()
-      }
+      // Vote on the question
+      vote(indexPath.row)
     } else {
       tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -79,5 +78,15 @@ class QuestionDetailViewController : UITableViewController {
     }
 
     return NSLocalizedString("QUESTION_DETAIL_CHOICE_LIST_TITLE", comment: "")
+  }
+
+  /// Vote on the given choice
+  private func vote(index:Int) {
+    SVProgressHUD.showWithStatus(NSLocalizedString("QUESTION_DETAIL_CHOICE_VOTING", comment: ""), maskType: .Gradient)
+
+    viewModel?.vote(index) { voted in
+      SVProgressHUD.dismiss()
+      self.tableView.reloadData()
+    }
   }
 }
