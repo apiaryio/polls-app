@@ -10,8 +10,10 @@ import UIKit
 import SVProgressHUD
 
 
+/// A view controller for showing a list of questions
 class QuestionListViewController : UITableViewController, QuestionDetailViewControllerDelegate {
-  var viewModel = QuestionListViewModel()
+  /// The view model backing this view controller
+  var viewModel:QuestionListViewModel?
 
   // MARK: View life-cycle
 
@@ -29,11 +31,11 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
   func loadData() {
     refreshControl!.beginRefreshing()
 
-    viewModel.loadData {
+    viewModel?.loadData {
       self.refreshControl!.endRefreshing()
       self.reloadInterface()
 
-      if self.viewModel.canCreateQuestion {
+      if self.viewModel?.canCreateQuestion ?? false {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createQuestion:")
       } else {
         self.navigationItem.rightBarButtonItem = nil
@@ -46,7 +48,7 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
   }
 
   func createQuestion(sender:AnyObject) {
-    if let viewModel = viewModel.createQuestionViewModel() {
+    if let viewModel = viewModel?.createQuestionViewModel() {
       let viewController = CreateQuestionViewController(style: .Grouped)
       viewController.delegate = self
       viewController.viewModel = viewModel
@@ -62,30 +64,32 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
   }
 
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel.numberOfQuestions()
+    return viewModel?.numberOfQuestions() ?? 0
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell ?? UITableViewCell(style: .Default, reuseIdentifier: "Cell")
-    cell.textLabel?.text = viewModel.question(indexPath.row)
+    cell.textLabel?.text = viewModel?.question(indexPath.row)
     return cell
   }
 
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let viewController = QuestionDetailViewController(style: .Grouped)
-    viewController.viewModel = viewModel.questionDetailViewModel(indexPath.row)
-    navigationController?.pushViewController(viewController, animated: true)
+    if let viewModel = self.viewModel?.questionDetailViewModel(indexPath.row) {
+      let viewController = QuestionDetailViewController(style: .Grouped)
+      viewController.viewModel = viewModel
+      navigationController?.pushViewController(viewController, animated: true)
+    }
   }
 
   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return viewModel.canDeleteQuestion(indexPath.row)
+    return viewModel?.canDeleteQuestion(indexPath.row) ?? false
   }
 
   override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     switch editingStyle {
       case .Delete:
         SVProgressHUD.showWithStatus(NSLocalizedString("QUESTION_LIST_QUESTION_DELETING", comment: ""), maskType: .Gradient)
-        viewModel.delete(indexPath.row) {
+        viewModel?.delete(indexPath.row) {
           SVProgressHUD.dismiss()
           tableView.reloadData()
         }

@@ -7,84 +7,136 @@
 //
 
 import Foundation
-import Alamofire
 import Representor
+import Hyperdrive
 
 
+/// View model for a collection of questions
 class QuestionListViewModel {
+  private var hyperdrive:Hyperdrive = Hyperdrive()
   private var representor:Representor<HTTPTransition>?
 
   private var questions:[Representor<HTTPTransition>]? {
     return representor?.representors["questions"]
   }
 
-  private var manager:Client = {
-    var defaultHeaders = Alamofire.Manager.sharedInstance.session.configuration.HTTPAdditionalHeaders ?? [:]
-    defaultHeaders["Accept"] = "application/vnd.siren+json"
-
-    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-    configuration.HTTPAdditionalHeaders =  defaultHeaders
-
-    return Client(configuration: configuration)
-  }()
-
   init() {}
 
+  /// Calling this method will download the questions from an API
   func loadData(completion:(() -> ())) {
-    manager.request(.GET, manager.baseURL).responseRepresentor { (_, _, representor, error) in
-      if let link = representor?.links["questions"] {
-        self.manager.request(.GET, link).responseRepresentor { _, _, representor, error in
-          if let representor = representor? {
-            self.representor = representor
-          } else {
-            println("Failure to retrieve questions: \(error)")
-          }
+    // The following boolean value may be changed to switch from using
+    // the API Blueprint to using the Hypermedia variant of the polls API
+    let useBlueprintAPI = true
 
+    if useBlueprintAPI {
+      loadBlueprint(completion)
+    } else {
+      loadHypermedia(completion)
+    }
+  }
+
+  // MARK: Loading data from the API
+
+  /// Load the root API resource using Hypermedia
+  private func loadHypermedia(completion:(() -> ())) {
+    hyperdrive.enter("https://polls.apiblueprint.org/") { result in
+      switch result {
+      case .Success(let representor):
+        if let questions = representor.links["questions"] {
+          self.loadQuestions(questions, completion: completion)
+        } else {
+          println("API does not support questions.")
           completion()
         }
-      } else {
-        println("Failure to retrieve root: \(error)")
+
+      case .Failure(let error):
+        println("Failed to retrieve root \(error)")
         completion()
       }
     }
   }
 
-  // MARK: -
+  /// Load the available API features using an API Blueprint
+  private func loadBlueprint(completion:(() -> ())) {
+    HyperBlueprint.enter(apiary: "pollsmeetup") { result in
+      switch result {
+      case .Success(let hyperdrive, let representor):
+        self.hyperdrive = hyperdrive
+        if let questions = representor.links["questions"] {
+          self.loadQuestions(questions, completion: completion)
+        } else {
+          println("API does not support questions.")
+          completion()
+        }
 
+      case .Failure(let error):
+        println("Failed to retrieve root \(error)")
+        completion()
+      }
+    }
+  }
+
+  /// Load the questions from the given URI
+  private func loadQuestions(uri:String, completion:(() -> ())) {
+    hyperdrive.request(uri) { result in
+      switch result {
+      case .Success(let representor):
+        self.representor = representor
+        completion()
+      case .Failure(let error):
+        println("Failure to retrieve questions: \(error)")
+        completion()
+      }
+    }
+  }
+
+  // MARK: API for the View Model
+
+  /// Returns whether the user may create a question
   var canCreateQuestion:Bool {
     return representor?.transitions["create"] != nil
   }
 
+  /// Returns a view model for creating a question if the user may create a question
   func createQuestionViewModel() -> CreateQuestionViewModel? {
     if let transition = representor?.transitions["create"] {
-      return CreateQuestionViewModel(manager: manager, transition: transition)
+      return CreateQuestionViewModel(hyperdrive: hyperdrive, transition: transition)
     }
 
     return nil
   }
 
+  /// Returns the number of loaded questions
   func numberOfQuestions() -> Int {
     return questions?.count ?? 0
   }
 
+  /// Returns the question text for a question index
   func question(index:Int) -> String {
     let question = questions?[index].attributes["question"] as? String
     return question ?? "Question"
   }
 
+  /// Returns whether the user may delete the question at the given index
   func canDeleteQuestion(index:Int) -> Bool {
     let transition = questions?[index].transitions["delete"]
     return transition != nil
   }
 
+  /** Asyncronously delete a question at the given index
+  :param: index The question index
+  :param: completion A completion closure to call once the operation is complete
+  */
   func delete(index:Int, completion:(() -> ())) {
     if let transition = questions?[index].transitions["delete"] {
-      manager.request(transition).response { _, response, _, _ in
-        if response?.statusCode >= 200 && response?.statusCode < 400 {
-          // 🐵 🔧 the updated representor
+      hyperdrive.request(transition) { result in
+        switch result {
+        case .Success(let representor):
           var questions = self.questions!
           questions.removeAtIndex(index)
           self.representor = Representor(transitions: self.representor?.transitions, representors: ["questions": questions], attributes: self.representor?.attributes)
+        case .Failure(let error):
+          println("Failed to delete: \(error)")
         }
 
         completion()
@@ -94,7 +146,8 @@ class QuestionListViewModel {
     }
   }
 
+  /// Returns a view model for the given question index
   func questionDetailViewModel(index:Int) -> QuestionDetailViewModel {
-    return QuestionDetailViewModel(manager: manager, representor: questions![index])
+    return QuestionDetailViewModel(hyperdrive: hyperdrive, representor: questions![index])
   }
 }
