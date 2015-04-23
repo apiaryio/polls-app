@@ -36,11 +36,11 @@ class CreateQuestionViewController : UITableViewController {
     validate()
   }
 
-  private func close(sender:AnyObject) {
+  func close(sender:AnyObject) {
     dismissViewControllerAnimated(true, completion: nil)
   }
 
-  private func save(sender:AnyObject) {
+  func save(sender:AnyObject) {
     SVProgressHUD.showInfoWithStatus(NSLocalizedString("QUESTION_CREATE_CREATING", comment: ""), maskType: .Gradient)
 
     func nonEmpty(choice:String) -> Bool {
