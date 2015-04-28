@@ -23,42 +23,46 @@ class QuestionListViewModel {
   init() {}
 
   /// Calling this method will download the questions from an API
-  func loadData(completion:(() -> ())) {
-    // The following boolean value may be changed to switch from using
-    // the API Blueprint to using the Hypermedia variant of the polls API
-    let useBlueprintAPI = true
+  func loadData(completion:((NSError?) -> ())) {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
 
-    if useBlueprintAPI {
-      loadBlueprint(completion)
-    } else {
-      loadHypermedia(completion)
+    switch userDefaults.hyperdriveMode {
+    case .Hypermedia:
+      loadHypermedia(userDefaults.hypermediaURL, completion: completion)
+      break
+    case .APIBlueprint:
+      loadBlueprint(userDefaults.apiBlueprintURL, completion: completion)
+      break
+    case .Apiary:
+      loadApiary(userDefaults.apiaryDomain, completion: completion)
+      break
     }
   }
 
   // MARK: Loading data from the API
 
   /// Load the root API resource using Hypermedia
-  private func loadHypermedia(completion:(() -> ())) {
-    hyperdrive.enter("https://polls.apiblueprint.org/") { result in
+  private func loadHypermedia(url:String, completion:((NSError?) -> ())) {
+    hyperdrive = Hyperdrive()
+    hyperdrive.enter(url) { result in
       switch result {
       case .Success(let representor):
         if let questions = representor.links["questions"] {
           self.loadQuestions(questions, completion: completion)
         } else {
           println("API does not support questions.")
-          completion()
+          completion(nil)
         }
 
       case .Failure(let error):
-        println("Failed to retrieve root \(error)")
-        completion()
+        completion(error)
       }
     }
   }
 
   /// Load the available API features using an API Blueprint
-  private func loadBlueprint(completion:(() -> ())) {
-    HyperBlueprint.enter(apiary: "pollsmeetup") { result in
+  private func loadBlueprint(url:String, completion:((NSError?) -> ())) {
+    HyperBlueprint.enter(blueprintURL: url) { result in
       switch result {
       case .Success(let hyperdrive, let representor):
         self.hyperdrive = hyperdrive
@@ -66,26 +70,43 @@ class QuestionListViewModel {
           self.loadQuestions(questions, completion: completion)
         } else {
           println("API does not support questions.")
-          completion()
+          completion(nil)
         }
 
       case .Failure(let error):
-        println("Failed to retrieve root \(error)")
-        completion()
+        completion(error)
+      }
+    }
+  }
+
+  /// Load the available API features using an API Blueprint hosted on Apiary
+  private func loadApiary(apiaryDomain:String, completion:((NSError?) -> ())) {
+    HyperBlueprint.enter(apiary: apiaryDomain) { result in
+      switch result {
+      case .Success(let hyperdrive, let representor):
+        self.hyperdrive = hyperdrive
+        if let questions = representor.links["questions"] {
+          self.loadQuestions(questions, completion: completion)
+        } else {
+          println("API does not support questions.")
+          completion(nil)
+        }
+
+      case .Failure(let error):
+        completion(error)
       }
     }
   }
 
   /// Load the questions from the given URI
-  private func loadQuestions(uri:String, completion:(() -> ())) {
+  private func loadQuestions(uri:String, completion:((NSError?) -> ())) {
     hyperdrive.request(uri) { result in
       switch result {
       case .Success(let representor):
         self.representor = representor
-        completion()
+        completion(nil)
       case .Failure(let error):
-        println("Failure to retrieve questions: \(error)")
-        completion()
+        completion(error)
       }
     }
   }

@@ -11,7 +11,7 @@ import SVProgressHUD
 
 
 /// A view controller for showing a list of questions
-class QuestionListViewController : UITableViewController, QuestionDetailViewControllerDelegate {
+class QuestionListViewController : UITableViewController, QuestionDetailViewControllerDelegate, UserPreferenceViewControllerDelegate {
   /// The view model backing this view controller
   var viewModel:QuestionListViewModel?
 
@@ -31,7 +31,7 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
   func loadData() {
     refreshControl!.beginRefreshing()
 
-    viewModel?.loadData {
+    viewModel?.loadData { error in
       self.refreshControl!.endRefreshing()
       self.reloadInterface()
 
@@ -39,6 +39,12 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createQuestion:")
       } else {
         self.navigationItem.rightBarButtonItem = nil
+      }
+
+      if let error = error {
+        self.refreshControl!.attributedTitle = NSAttributedString(string: error.localizedDescription)
+      } else {
+        self.refreshControl!.attributedTitle = nil
       }
     }
   }
@@ -105,5 +111,22 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
 
   func didCreateQuestion(viewController:CreateQuestionViewController) {
     loadData()
+  }
+
+  // MARK: UserPreferenceViewControllerDelegate
+
+  func didChangePreferences(viewController: UserPreferenceViewController) {
+    loadData()
+  }
+
+  // MARK: User Preferences
+
+  override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent) {
+    if motion == .MotionShake {
+      let viewController = UserPreferenceViewController(nibName: nil, bundle: nil)
+      viewController.delegate = self
+      let navigationController = UINavigationController(rootViewController: viewController)
+      presentViewController(navigationController, animated: true, completion: nil)
+    }
   }
 }
