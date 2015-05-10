@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		273A9CF81AEFB37900473C2A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A9CF71AEFB37900473C2A /* Preferences.swift */; };
+		273A9D031AEFC95700473C2A /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A9D021AEFC95700473C2A /* PreferencesTests.swift */; };
+		273A9D061AEFED2D00473C2A /* UserPreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A9D041AEFED2D00473C2A /* UserPreferenceViewController.swift */; };
+		273A9D071AEFED2D00473C2A /* UserPreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273A9D051AEFED2D00473C2A /* UserPreferenceViewController.xib */; };
 		273E7BB51ACC8755006449A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BB41ACC8755006449A1 /* AppDelegate.swift */; };
 		273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BBB1ACC8755006449A1 /* Images.xcassets */; };
 		273E7BBF1ACC8755006449A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */; };
@@ -33,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		273A9CF71AEFB37900473C2A /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = Polls/Preferences.swift; sourceTree = SOURCE_ROOT; };
+		273A9D021AEFC95700473C2A /* PreferencesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
+		273A9D041AEFED2D00473C2A /* UserPreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPreferenceViewController.swift; path = Preferences/UserPreferenceViewController.swift; sourceTree = "<group>"; };
+		273A9D051AEFED2D00473C2A /* UserPreferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserPreferenceViewController.xib; path = Preferences/UserPreferenceViewController.xib; sourceTree = "<group>"; };
 		273E7BAF1ACC8755006449A1 /* Polls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Polls.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		273E7BB31ACC8755006449A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		273E7BB41ACC8755006449A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +83,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		273A9D011AEFC32000473C2A /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				273A9D041AEFED2D00473C2A /* UserPreferenceViewController.swift */,
+				273A9D051AEFED2D00473C2A /* UserPreferenceViewController.xib */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
 		273E7BA61ACC8755006449A1 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +121,7 @@
 				2755F6D41ACC8905006A9A44 /* View Controllers */,
 				2755F6D71ACC8905006A9A44 /* View Models */,
 				279D63841ACD5CEF0024E2BC /* Views */,
+				273A9CF71AEFB37900473C2A /* Preferences.swift */,
 				273E7BBB1ACC8755006449A1 /* Images.xcassets */,
 				2755F6E21ACC913A006A9A44 /* Localizable.strings */,
 				273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */,
@@ -125,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				273E7BCA1ACC8755006449A1 /* PollsTests.swift */,
+				273A9D021AEFC95700473C2A /* PreferencesTests.swift */,
 				273E7BC81ACC8755006449A1 /* Supporting Files */,
 			);
 			path = PollsTests;
@@ -144,6 +163,7 @@
 				2755F6D61ACC8905006A9A44 /* QuestionListViewController.swift */,
 				2755F6D51ACC8905006A9A44 /* QuestionDetailViewController.swift */,
 				279D63821ACD571F0024E2BC /* CreateQuestionViewController.swift */,
+				273A9D011AEFC32000473C2A /* Preferences */,
 			);
 			name = "View Controllers";
 			path = ViewControllers;
@@ -269,6 +289,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273A9D071AEFED2D00473C2A /* UserPreferenceViewController.xib in Resources */,
 				2755F6E01ACC913A006A9A44 /* Localizable.strings in Resources */,
 				273E7BBF1ACC8755006449A1 /* LaunchScreen.xib in Resources */,
 				273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */,
@@ -339,12 +360,14 @@
 			files = (
 				279D63811ACD55BE0024E2BC /* CreateQuestionViewModel.swift in Sources */,
 				2755F6DB1ACC8905006A9A44 /* QuestionListViewController.swift in Sources */,
+				273A9D061AEFED2D00473C2A /* UserPreferenceViewController.swift in Sources */,
 				2755F6DA1ACC8905006A9A44 /* QuestionDetailViewController.swift in Sources */,
 				279D63831ACD571F0024E2BC /* CreateQuestionViewController.swift in Sources */,
 				2755F6DD1ACC8905006A9A44 /* QuestionListViewModel.swift in Sources */,
 				2755F6DC1ACC8905006A9A44 /* QuestionDetailViewModel.swift in Sources */,
 				279D63911ACD5DB60024E2BC /* TableTextViewCell.m in Sources */,
 				273E7BB51ACC8755006449A1 /* AppDelegate.swift in Sources */,
+				273A9CF81AEFB37900473C2A /* Preferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273A9D031AEFC95700473C2A /* PreferencesTests.swift in Sources */,
 				273E7BCB1ACC8755006449A1 /* PollsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

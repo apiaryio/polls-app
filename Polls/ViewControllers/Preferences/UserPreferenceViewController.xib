@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserPreferenceViewController" customModule="Polls" customModuleProvider="target">
+            <connections>
+                <outlet property="segmentedControl" destination="t3G-bQ-wz9" id="r8K-Ze-DFH"/>
+                <outlet property="textField" destination="jMf-Db-Dpj" id="cSp-xt-IS0"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="t3G-bQ-wz9">
+                    <rect key="frame" x="20" y="90" width="560" height="29"/>
+                    <segments>
+                        <segment title="Hypermedia"/>
+                        <segment title="API Blueprint"/>
+                    </segments>
+                </segmentedControl>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jMf-Db-Dpj">
+                    <rect key="frame" x="20" y="138" width="560" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2x-Ug-rBN">
+                    <rect key="frame" x="20" y="188" width="560" height="30"/>
+                    <state key="normal" title="Reset Preferences">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="resetPrefereces:" destination="-1" eventType="touchUpInside" id="Blh-wd-ywK"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="C2x-Ug-rBN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="9Vz-75-hsx"/>
+                <constraint firstAttribute="trailing" secondItem="t3G-bQ-wz9" secondAttribute="trailing" constant="20" id="GC3-VR-ETg"/>
+                <constraint firstItem="jMf-Db-Dpj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Irj-hd-hpH"/>
+                <constraint firstItem="jMf-Db-Dpj" firstAttribute="top" secondItem="t3G-bQ-wz9" secondAttribute="bottom" constant="20" id="JhJ-eI-oiA"/>
+                <constraint firstAttribute="trailing" secondItem="C2x-Ug-rBN" secondAttribute="trailing" constant="20" id="YDo-Ee-dxL"/>
+                <constraint firstItem="t3G-bQ-wz9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="fK3-2s-nKk"/>
+                <constraint firstItem="t3G-bQ-wz9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="g4u-np-WKy"/>
+                <constraint firstAttribute="trailing" secondItem="jMf-Db-Dpj" secondAttribute="trailing" constant="20" id="vw3-1Q-45b"/>
+                <constraint firstItem="C2x-Ug-rBN" firstAttribute="top" secondItem="jMf-Db-Dpj" secondAttribute="bottom" constant="20" id="zws-4U-eqO"/>
+            </constraints>
+            <point key="canvasLocation" x="445" y="-35"/>
+        </view>
+    </objects>
+</document>
