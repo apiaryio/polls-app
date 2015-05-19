@@ -47,7 +47,7 @@ class QuestionListViewModel {
     hyperdrive.enter(url) { result in
       switch result {
       case .Success(let representor):
-        if let questions = representor.links["questions"] {
+        if let questions = representor.transitions["questions"] {
           self.loadQuestions(questions, completion: completion)
         } else {
           println("API does not support questions.")
@@ -66,7 +66,7 @@ class QuestionListViewModel {
       switch result {
       case .Success(let hyperdrive, let representor):
         self.hyperdrive = hyperdrive
-        if let questions = representor.links["questions"] {
+        if let questions = representor.transitions["questions"] {
           self.loadQuestions(questions, completion: completion)
         } else {
           println("API does not support questions.")
@@ -85,7 +85,7 @@ class QuestionListViewModel {
       switch result {
       case .Success(let hyperdrive, let representor):
         self.hyperdrive = hyperdrive
-        if let questions = representor.links["questions"] {
+        if let questions = representor.transitions["questions"] {
           self.loadQuestions(questions, completion: completion)
         } else {
           println("API does not support questions.")
@@ -99,8 +99,8 @@ class QuestionListViewModel {
   }
 
   /// Load the questions from the given URI
-  private func loadQuestions(uri:String, completion:((NSError?) -> ())) {
-    hyperdrive.request(uri) { result in
+  private func loadQuestions(transition:HTTPTransition, completion:((NSError?) -> ())) {
+    hyperdrive.request(transition) { result in
       switch result {
       case .Success(let representor):
         self.representor = representor
