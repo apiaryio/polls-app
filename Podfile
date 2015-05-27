@@ -5,6 +5,7 @@ target 'Polls' do
   pod 'Hyperdrive'
   pod 'SVProgressHUD'
   pod 'VTAcknowledgementsViewController'
+  pod 'SimulatorStatusMagic', :configurations => ['Debug']
 end
 
 target 'PollsTests' do
@@ -23,7 +24,7 @@ end
 class ::Pod::Generator::Acknowledgements
   def specs
     file_accessors.map { |accessor| accessor.spec.root }.uniq.reject do |spec|
-      spec.name == 'VTAcknowledgementsViewController'
+      ['VTAcknowledgementsViewController', 'SimulatorStatusMagic'].include?(spec.name)
     end
   end
 end

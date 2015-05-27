@@ -26,18 +26,21 @@ PODS:
     - Representor/HTTP/Transition
   - Representor/HTTP/Transition (0.6.0):
     - Representor/Core
+  - SimulatorStatusMagic (1.6.1)
   - SVProgressHUD (1.1.3)
   - URITemplate (1.2.0)
   - VTAcknowledgementsViewController (0.14)
 
 DEPENDENCIES:
   - Hyperdrive
+  - SimulatorStatusMagic
   - SVProgressHUD
   - VTAcknowledgementsViewController
 
 SPEC CHECKSUMS:
   Hyperdrive: 1ed9e4d8b063674dd3571015b92ed66ef412d1d3
   Representor: 4e5f5bf36a899e05205f446f23705ed4d8121c29
+  SimulatorStatusMagic: 688d39a6bf90b15d2ff33ad7fcaea806cb2ac1c2
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   URITemplate: 0dbf40f0e378eb9c6d04cc08e6101fb82d126dc3
   VTAcknowledgementsViewController: 11a869dd69598a852f12699aeaf36e2589d3fc1b
