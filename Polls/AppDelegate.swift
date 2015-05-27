@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+#if SNAPSHOT
+import SimulatorStatusMagic
+#endif
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window?.rootViewController = UINavigationController(rootViewController: viewController)
     window?.makeKeyAndVisible()
+
+#if SNAPSHOT
+    let statusBarManager = SDStatusBarManager.sharedInstance()
+    statusBarManager.carrierName = "Apiary"
+    statusBarManager.enableOverrides()
+#endif
 
     return true
   }
