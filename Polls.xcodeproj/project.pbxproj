@@ -13,7 +13,6 @@
 		273A9D071AEFED2D00473C2A /* UserPreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273A9D051AEFED2D00473C2A /* UserPreferenceViewController.xib */; };
 		273E7BB51ACC8755006449A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BB41ACC8755006449A1 /* AppDelegate.swift */; };
 		273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BBB1ACC8755006449A1 /* Images.xcassets */; };
-		273E7BBF1ACC8755006449A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */; };
 		273E7BCB1ACC8755006449A1 /* PollsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BCA1ACC8755006449A1 /* PollsTests.swift */; };
 		2755F6DA1ACC8905006A9A44 /* QuestionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D51ACC8905006A9A44 /* QuestionDetailViewController.swift */; };
 		2755F6DB1ACC8905006A9A44 /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755F6D61ACC8905006A9A44 /* QuestionListViewController.swift */; };
@@ -46,7 +45,6 @@
 		273E7BB31ACC8755006449A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		273E7BB41ACC8755006449A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		273E7BBB1ACC8755006449A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		273E7BBE1ACC8755006449A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		273E7BC41ACC8755006449A1 /* PollsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PollsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		273E7BC91ACC8755006449A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		273E7BCA1ACC8755006449A1 /* PollsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsTests.swift; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 				273A9CF71AEFB37900473C2A /* Preferences.swift */,
 				273E7BBB1ACC8755006449A1 /* Images.xcassets */,
 				2755F6E21ACC913A006A9A44 /* Localizable.strings */,
-				273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */,
 				273E7BB21ACC8755006449A1 /* Supporting Files */,
 				279D638B1ACD5DA20024E2BC /* Polls-Bridging-Header.h */,
 			);
@@ -292,7 +289,6 @@
 			files = (
 				273A9D071AEFED2D00473C2A /* UserPreferenceViewController.xib in Resources */,
 				2755F6E01ACC913A006A9A44 /* Localizable.strings in Resources */,
-				273E7BBF1ACC8755006449A1 /* LaunchScreen.xib in Resources */,
 				273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,14 +389,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		273E7BBD1ACC8755006449A1 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				273E7BBE1ACC8755006449A1 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
 		2755F6E21ACC913A006A9A44 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -494,6 +482,7 @@
 			baseConfigurationReference = B8C3985473860D4F63FF3709 /* Pods-Polls.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Polls/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -508,6 +497,7 @@
 			baseConfigurationReference = 8471C9C09E565A049BA90123 /* Pods-Polls.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Polls/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
