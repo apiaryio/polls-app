@@ -66,7 +66,7 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
   }
 
   func changePreferences(sender:AnyObject) {
-    let viewController = UserPreferenceViewController(nibName: nil, bundle: nil)
+    let viewController = UserPreferenceViewController(style: .Grouped)
     viewController.delegate = self
     let navigationController = UINavigationController(rootViewController: viewController)
     presentViewController(navigationController, animated: true, completion: nil)
