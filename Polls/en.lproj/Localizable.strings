@@ -9,6 +9,7 @@
 // Question List
 "QUESTION_LIST_TITLE" = "Questions";
 "QUESTION_LIST_QUESTION_DELETING" = "Deleting";
+"QUESTION_LIST_PREFERENCES" = "Settings";
 
 // Question Detail
 "QUESTION_DETAIL_TITLE" = "Question";
