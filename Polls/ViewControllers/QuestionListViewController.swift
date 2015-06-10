@@ -28,6 +28,20 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("QUESTION_LIST_PREFERENCES", comment: ""), style: .Plain, target: self, action: "changePreferences:")
   }
 
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    if let selectedIndex = tableView.indexPathForSelectedRow() {
+      tableView.deselectRowAtIndexPath(selectedIndex, animated: animated)
+
+      transitionCoordinator()?.notifyWhenInteractionEndsUsingBlock { context in
+        if context.isCancelled() {
+          self.tableView.selectRowAtIndexPath(selectedIndex, animated: false, scrollPosition: .None)
+        }
+      }
+    }
+  }
+
   // MARK: Other
 
   func loadData() {
