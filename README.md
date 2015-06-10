@@ -1,3 +1,5 @@
+<img src="Polls/Images.xcassets/AppIcon.appiconset/app-3x.png" width=90 height=90 />
+
 # Polls Client
 
 This is a Swift iOS client for the [Polls API](https://github.com/apiaryio/polls-api). A simple application allowing users to view polls and vote in them.
