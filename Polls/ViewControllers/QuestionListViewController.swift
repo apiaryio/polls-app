@@ -24,6 +24,8 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
     refreshControl = UIRefreshControl()
     refreshControl!.addTarget(self, action:Selector("loadData"), forControlEvents:.ValueChanged)
     loadData()
+
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("QUESTION_LIST_PREFERENCES", comment: ""), style: .Plain, target: self, action: "changePreferences:")
   }
 
   // MARK: Other
@@ -61,6 +63,13 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
 
       presentViewController(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
+  }
+
+  func changePreferences(sender:AnyObject) {
+    let viewController = UserPreferenceViewController(style: .Grouped)
+    viewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: viewController)
+    presentViewController(navigationController, animated: true, completion: nil)
   }
 
   // MARK: UITableViewDelegate
@@ -117,16 +126,5 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
 
   func didChangePreferences(viewController: UserPreferenceViewController) {
     loadData()
-  }
-
-  // MARK: User Preferences
-
-  override func motionBegan(motion: UIEventSubtype, withEvent event: UIEvent) {
-    if motion == .MotionShake {
-      let viewController = UserPreferenceViewController(nibName: nil, bundle: nil)
-      viewController.delegate = self
-      let navigationController = UINavigationController(rootViewController: viewController)
-      presentViewController(navigationController, animated: true, completion: nil)
-    }
   }
 }

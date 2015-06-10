@@ -10,7 +10,6 @@
 		273A9CF81AEFB37900473C2A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A9CF71AEFB37900473C2A /* Preferences.swift */; };
 		273A9D031AEFC95700473C2A /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A9D021AEFC95700473C2A /* PreferencesTests.swift */; };
 		273A9D061AEFED2D00473C2A /* UserPreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273A9D041AEFED2D00473C2A /* UserPreferenceViewController.swift */; };
-		273A9D071AEFED2D00473C2A /* UserPreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273A9D051AEFED2D00473C2A /* UserPreferenceViewController.xib */; };
 		273E7BB51ACC8755006449A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BB41ACC8755006449A1 /* AppDelegate.swift */; };
 		273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 273E7BBB1ACC8755006449A1 /* Images.xcassets */; };
 		273E7BCB1ACC8755006449A1 /* PollsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E7BCA1ACC8755006449A1 /* PollsTests.swift */; };
@@ -40,7 +39,6 @@
 		273A9CF71AEFB37900473C2A /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preferences.swift; path = Polls/Preferences.swift; sourceTree = SOURCE_ROOT; };
 		273A9D021AEFC95700473C2A /* PreferencesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
 		273A9D041AEFED2D00473C2A /* UserPreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPreferenceViewController.swift; path = Preferences/UserPreferenceViewController.swift; sourceTree = "<group>"; };
-		273A9D051AEFED2D00473C2A /* UserPreferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserPreferenceViewController.xib; path = Preferences/UserPreferenceViewController.xib; sourceTree = "<group>"; };
 		273E7BAF1ACC8755006449A1 /* Polls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Polls.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		273E7BB31ACC8755006449A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		273E7BB41ACC8755006449A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				273A9D041AEFED2D00473C2A /* UserPreferenceViewController.swift */,
-				273A9D051AEFED2D00473C2A /* UserPreferenceViewController.xib */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -217,6 +214,7 @@
 				273E7BAD1ACC8755006449A1 /* Resources */,
 				83210E18327A5E708626B1C3 /* Embed Pods Frameworks */,
 				E402AC51F76FE98DA8D788F9 /* Copy Pods Resources */,
+				27467AF21B27B3C700F9B7DC /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -287,7 +285,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				273A9D071AEFED2D00473C2A /* UserPreferenceViewController.xib in Resources */,
 				2755F6E01ACC913A006A9A44 /* Localizable.strings in Resources */,
 				273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */,
 			);
@@ -303,6 +300,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		27467AF21B27B3C700F9B7DC /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "COMMITS=$(git rev-list HEAD | wc -l)\nCOMMITS=$(($COMMITS))\ndefaults write \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH%.*}\" \"CFBundleVersion\" \"${COMMITS}\"";
+		};
 		5DE2493D868D8C5F3DA59FC0 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

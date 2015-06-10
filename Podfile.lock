@@ -28,15 +28,18 @@ PODS:
     - Representor/Core
   - SVProgressHUD (1.1.3)
   - URITemplate (1.2.0)
+  - VTAcknowledgementsViewController (0.14)
 
 DEPENDENCIES:
   - Hyperdrive
   - SVProgressHUD
+  - VTAcknowledgementsViewController
 
 SPEC CHECKSUMS:
   Hyperdrive: 1ed9e4d8b063674dd3571015b92ed66ef412d1d3
   Representor: 4e5f5bf36a899e05205f446f23705ed4d8121c29
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   URITemplate: 0dbf40f0e378eb9c6d04cc08e6101fb82d126dc3
+  VTAcknowledgementsViewController: 11a869dd69598a852f12699aeaf36e2589d3fc1b
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.37.2

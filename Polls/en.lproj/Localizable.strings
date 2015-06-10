@@ -9,6 +9,7 @@
 // Question List
 "QUESTION_LIST_TITLE" = "Questions";
 "QUESTION_LIST_QUESTION_DELETING" = "Deleting";
+"QUESTION_LIST_PREFERENCES" = "Settings";
 
 // Question Detail
 "QUESTION_DETAIL_TITLE" = "Question";
@@ -25,6 +26,11 @@
 
 // User Preferences
 "USER_PREFERENCES_TITLE" = "Settings";
+"USER_PREFERENCES_MIDE_TITLE" = "API Endpoint and Mode";
 "USER_PREFERENCES_MODE_HYPERMEDIA" = "Hypermedia";
 "USER_PREFERENCES_MODE_API_BLUEPRINT" = "API Blueprint";
 "USER_PREFERENCES_MODE_APIARY" = "Apiary";
+"USER_PREFERENCES_ABOUT_TITLE" = "About";
+"USER_PREFERENCES_ABOUT_VERSION" = "Version";
+"USER_PREFERENCES_ABOUT_ACKNOWLEDGEMENTS" = "Acknowledgements";
+"USER_PREFERENCES_ABOUT_ACKNOWLEDGEMENTS_HEADER" = "This application has been built with the following open source components";
