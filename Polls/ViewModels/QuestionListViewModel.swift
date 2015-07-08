@@ -121,7 +121,7 @@ class QuestionListViewModel {
   /// Returns a view model for creating a question if the user may create a question
   func createQuestionViewModel() -> CreateQuestionViewModel? {
     if let transition = representor?.transitions["create"] {
-      return CreateQuestionViewModel(hyperdrive: hyperdrive, transition: transition)
+      return CreateQuestionViewModel(hyperdrive: hyperdrive, transition: transition, didAddCallback: didAddQuestionRepresentor)
     }
 
     return nil
@@ -169,6 +169,38 @@ class QuestionListViewModel {
 
   /// Returns a view model for the given question index
   func questionDetailViewModel(index:Int) -> QuestionDetailViewModel {
-    return QuestionDetailViewModel(hyperdrive: hyperdrive, representor: questions![index])
+    return QuestionDetailViewModel(hyperdrive: hyperdrive, representor: questions![index], didUpdateCallback: didUpdateQuestionRepresentor(index))
+  }
+
+  // MARK: Callbacks
+
+  func didAddQuestionRepresentor(representor:Representor<HTTPTransition>) {
+    self.representor = self.representor?.insert("questions", representor: representor, index: 0)
+  }
+
+  func didUpdateQuestionRepresentor(index:Int)(representor:Representor<HTTPTransition>) {
+    self.representor = self.representor?.update("questions", representor: representor, index: index)
+  }
+}
+
+extension Representor {
+  func insert(relation:String, representor:Representor<Transition>, index:Int) -> Representor<Transition> {
+    var relatedRepresentors = self.representors[relation] ?? []
+    relatedRepresentors.insert(representor, atIndex: index)
+
+    var representors = self.representors
+    representors[relation] = relatedRepresentors
+
+    return Representor(transitions: transitions, representors: representors, attributes: attributes, metadata: metadata)
+  }
+
+  func update(relation:String, representor:Representor<Transition>, index:Int) -> Representor<Transition> {
+    var relatedRepresentors = self.representors[relation] ?? []
+    relatedRepresentors[index] = representor
+
+    var representors = self.representors
+    representors[relation] = relatedRepresentors
+
+    return Representor(transitions: transitions, representors: representors, attributes: attributes, metadata: metadata)
   }
 }
