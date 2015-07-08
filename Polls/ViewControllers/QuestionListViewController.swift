@@ -84,8 +84,12 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
       let viewController = CreateQuestionViewController(style: .Grouped)
       viewController.delegate = self
       viewController.viewModel = viewModel
+      viewController.modalPresentationStyle = .FormSheet
 
-      presentViewController(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+      let navigationController = UINavigationController(rootViewController: viewController)
+      navigationController.modalPresentationStyle = .FormSheet
+
+      presentViewController(navigationController, animated: true, completion: nil)
     }
   }
 
@@ -93,6 +97,7 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
     let viewController = UserPreferenceViewController(style: .Grouped)
     viewController.delegate = self
     let navigationController = UINavigationController(rootViewController: viewController)
+    navigationController.modalPresentationStyle = .FormSheet
     presentViewController(navigationController, animated: true, completion: nil)
   }
 

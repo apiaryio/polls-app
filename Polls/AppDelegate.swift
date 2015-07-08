@@ -16,11 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    if let splitViewControler = window?.rootViewController as? UISplitViewController,
-        navigationController = splitViewControler.viewControllers.first as? UINavigationController,
+    if let splitViewController = window?.rootViewController as? UISplitViewController {
+      if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+        splitViewController.preferredDisplayMode = .AllVisible
+      }
+
+      if let navigationController = splitViewController.viewControllers.first as? UINavigationController,
         viewController = navigationController.topViewController as? QuestionListViewController
-    {
-      splitViewControler.delegate = viewController
+      {
+        splitViewController.delegate = viewController
+      }
     }
 
 #if SNAPSHOT
