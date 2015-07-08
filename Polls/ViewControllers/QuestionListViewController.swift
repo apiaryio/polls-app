@@ -11,9 +11,9 @@ import SVProgressHUD
 
 
 /// A view controller for showing a list of questions
-class QuestionListViewController : UITableViewController, QuestionDetailViewControllerDelegate, UserPreferenceViewControllerDelegate {
+class QuestionListViewController : UITableViewController, UISplitViewControllerDelegate, QuestionDetailViewControllerDelegate, UserPreferenceViewControllerDelegate {
   /// The view model backing this view controller
-  var viewModel:QuestionListViewModel?
+  let viewModel:QuestionListViewModel? = QuestionListViewModel()
 
   // MARK: View life-cycle
 
@@ -38,6 +38,16 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
         if context.isCancelled() {
           self.tableView.selectRowAtIndexPath(selectedIndex, animated: false, scrollPosition: .None)
         }
+      }
+    }
+  }
+
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if let indexPath = tableView.indexPathForSelectedRow() {
+      if let viewModel = self.viewModel?.questionDetailViewModel(indexPath.row),
+        viewController = segue.destinationViewController.topViewController as? QuestionDetailViewController
+      {
+        viewController.viewModel = viewModel
       }
     }
   }
@@ -97,17 +107,9 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell ?? UITableViewCell(style: .Default, reuseIdentifier: "Cell")
+    let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
     cell.textLabel?.text = viewModel?.question(indexPath.row)
     return cell
-  }
-
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if let viewModel = self.viewModel?.questionDetailViewModel(indexPath.row) {
-      let viewController = QuestionDetailViewController(style: .Grouped)
-      viewController.viewModel = viewModel
-      navigationController?.pushViewController(viewController, animated: true)
-    }
   }
 
   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -128,6 +130,18 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
       case .None:
         break
     }
+  }
+
+  // MARK: UISplitViewControllerDelegate
+
+  func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController!, ontoPrimaryViewController primaryViewController: UIViewController!) -> Bool {
+    if let navigationController = secondaryViewController as? UINavigationController,
+        viewController = navigationController.topViewController as? QuestionDetailViewController
+    {
+      return viewController.viewModel == nil
+    }
+
+    return false
   }
 
   // MARK: QuestionDetailViewControllerDelegate

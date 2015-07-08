@@ -16,13 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    let viewModel = QuestionListViewModel()
-    let viewController = QuestionListViewController()
-    viewController.viewModel = viewModel
-
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
-    window?.rootViewController = UINavigationController(rootViewController: viewController)
-    window?.makeKeyAndVisible()
+    if let splitViewControler = window?.rootViewController as? UISplitViewController,
+        navigationController = splitViewControler.viewControllers.first as? UINavigationController,
+        viewController = navigationController.topViewController as? QuestionListViewController
+    {
+      splitViewControler.delegate = viewController
+    }
 
 #if SNAPSHOT
     let statusBarManager = SDStatusBarManager.sharedInstance()

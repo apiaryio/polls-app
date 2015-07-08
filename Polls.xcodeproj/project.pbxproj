@@ -21,6 +21,7 @@
 		279D63811ACD55BE0024E2BC /* CreateQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63801ACD55BE0024E2BC /* CreateQuestionViewModel.swift */; };
 		279D63831ACD571F0024E2BC /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63821ACD571F0024E2BC /* CreateQuestionViewController.swift */; };
 		279D63911ACD5DB60024E2BC /* TableTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D63901ACD5DB60024E2BC /* TableTextViewCell.m */; };
+		27D0CD6A1B4D897600675839 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27D0CD691B4D897600675839 /* Storyboard.storyboard */; };
 		27FCC7701B0BB3E600459180 /* TableTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D63901ACD5DB60024E2BC /* TableTextViewCell.m */; };
 		4240BA9FF449C3FC8E90D46C /* Pods_Polls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0746BA6A152BE434B277F6 /* Pods_Polls.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		279D638B1ACD5DA20024E2BC /* Polls-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Polls-Bridging-Header.h"; sourceTree = "<group>"; };
 		279D638F1ACD5DB60024E2BC /* TableTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableTextViewCell.h; sourceTree = "<group>"; };
 		279D63901ACD5DB60024E2BC /* TableTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableTextViewCell.m; sourceTree = "<group>"; };
+		27D0CD691B4D897600675839 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		8471C9C09E565A049BA90123 /* Pods-Polls.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Polls.release.xcconfig"; path = "Pods/Target Support Files/Pods-Polls/Pods-Polls.release.xcconfig"; sourceTree = "<group>"; };
 		B8C3985473860D4F63FF3709 /* Pods-Polls.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Polls.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Polls/Pods-Polls.debug.xcconfig"; sourceTree = "<group>"; };
 		CE0746BA6A152BE434B277F6 /* Pods_Polls.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Polls.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +122,7 @@
 				273A9CF71AEFB37900473C2A /* Preferences.swift */,
 				273E7BBB1ACC8755006449A1 /* Images.xcassets */,
 				2755F6E21ACC913A006A9A44 /* Localizable.strings */,
+				27D0CD691B4D897600675839 /* Storyboard.storyboard */,
 				273E7BB21ACC8755006449A1 /* Supporting Files */,
 				279D638B1ACD5DA20024E2BC /* Polls-Bridging-Header.h */,
 			);
@@ -288,6 +291,7 @@
 			files = (
 				2755F6E01ACC913A006A9A44 /* Localizable.strings in Resources */,
 				273E7BBC1ACC8755006449A1 /* Images.xcassets in Resources */,
+				27D0CD6A1B4D897600675839 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
