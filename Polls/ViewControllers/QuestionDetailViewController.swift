@@ -16,7 +16,7 @@ class QuestionDetailViewController : UITableViewController {
   var viewModel:QuestionDetailViewModel? {
     didSet {
       if isViewLoaded() {
-        tableView.reloadData()
+        updateState()
       }
     }
   }
@@ -26,6 +26,7 @@ class QuestionDetailViewController : UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = NSLocalizedString("QUESTION_DETAIL_TITLE", comment: "")
+    updateState()
   }
 
   // MARK: UITableViewDelegate
@@ -87,6 +88,30 @@ class QuestionDetailViewController : UITableViewController {
     viewModel?.vote(index) { voted in
       SVProgressHUD.dismiss()
       self.tableView.reloadData()
+    }
+  }
+
+  func updateState() {
+    if viewModel?.canReload ?? false {
+      if refreshControl == nil {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action:Selector("reload"), forControlEvents:.ValueChanged)
+      }
+    } else {
+      refreshControl = nil
+    }
+
+    tableView?.reloadData()
+  }
+
+  func reload() {
+    if let viewModel = viewModel {
+      viewModel.reload { result in
+        self.refreshControl?.endRefreshing()
+        self.updateState()
+      }
+    } else {
+      refreshControl?.endRefreshing()
     }
   }
 }

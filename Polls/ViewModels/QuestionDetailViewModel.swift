@@ -16,6 +16,25 @@ class QuestionDetailViewModel {
   private let hyperdrive:Hyperdrive
   private var representor:Representor<HTTPTransition>
 
+  var canReload:Bool {
+    return self.representor.transitions["self"] != nil
+  }
+
+  func reload(completion:((Result) -> ())) {
+    if let uri = self.representor.transitions["self"] {
+      hyperdrive.request(uri) { result in
+        switch result {
+        case .Success(let representor):
+          self.representor = representor
+        case .Failure(let error):
+          break
+        }
+
+        completion(result)
+      }
+    }
+  }
+
   private var choices:[Representor<HTTPTransition>] {
     return representor.representors["choices"] ?? []
   }
