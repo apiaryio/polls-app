@@ -72,6 +72,12 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
       } else {
         self.refreshControl!.attributedTitle = nil
       }
+
+      if let navigationController = self.splitViewController?.viewControllers.last as? UINavigationController,
+          viewController = navigationController.topViewController as? QuestionDetailViewController
+      {
+        viewController.viewModel = nil
+      }
     }
   }
 
@@ -128,6 +134,12 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
         viewModel?.delete(indexPath.row) {
           SVProgressHUD.dismiss()
           tableView.reloadData()
+
+          if let navigationController = self.splitViewController?.viewControllers.last as? UINavigationController,
+            viewController = navigationController.topViewController as? QuestionDetailViewController
+          {
+            viewController.viewModel = nil
+          }
         }
         break
       case .Insert:
