@@ -4,7 +4,17 @@
 
 [![Circle CI Status](https://img.shields.io/circleci/project/apiaryio/polls-app.svg)](https://circleci.com/gh/apiaryio/polls-app/tree/master)
 
-This is a Swift iOS client for the [Polls API](https://github.com/apiaryio/polls-api). A simple application allowing users to view polls and vote in them.
+This is a Swift iPhone and iPad client for the [Polls API](https://github.com/apiaryio/polls-api) - a simple application allowing users to view polls and vote in them.
+
+Polls is an example application utilising the [Hyperdrive](https://github.com/the-hypermedia-project/Hyperdrive) API client. Hyperdrive will communicate to the [Polls API](http://github.com/apiaryio/polls-api) without any hard-coded knowledge about how the API is implemented, just an understanding of the semantics the API is using.
+
+The application does this by learning how the API works at run-time. This can
+be achived in one of two ways:
+
+- By downloading the [API specification](apiary.apib) in [API Blueprint](https://apiblueprint.org/) format.
+- Talking directly to an API that exposes it's features and transitions in the API, such as with the [Siren](https://github.com/kevinswiber/siren) hypermedia content type.
+
+Both the API and the application support both of these ways, you can switch between these modes in the application settings.
 
 <img width=375 height=667 src="Screenshot.png" alt="Screenshot of Polls iOS Application" />
 
@@ -33,8 +43,8 @@ The Polls application is constructed from three view controllers and view models
 
 The Polls iOS client can be configured to use any API root, or switch
 between connecting to a Hypermedia API or the JSON Polls API described
-via an API Blueprint. You can switch between these modes by shaking
-the device (^⌘Z in the simulator).
+via an API Blueprint. You can switch between these modes by entering the
+applications settings.
 
 Defaults:
 
