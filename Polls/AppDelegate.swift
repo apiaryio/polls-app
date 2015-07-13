@@ -16,13 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    let viewModel = QuestionListViewModel()
-    let viewController = QuestionListViewController()
-    viewController.viewModel = viewModel
+    if let splitViewController = window?.rootViewController as? UISplitViewController {
+      if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+        splitViewController.preferredDisplayMode = .AllVisible
+      }
 
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
-    window?.rootViewController = UINavigationController(rootViewController: viewController)
-    window?.makeKeyAndVisible()
+      if let navigationController = splitViewController.viewControllers.first as? UINavigationController,
+        viewController = navigationController.topViewController as? QuestionListViewController
+      {
+        splitViewController.delegate = viewController
+      }
+    }
 
 #if SNAPSHOT
     let statusBarManager = SDStatusBarManager.sharedInstance()

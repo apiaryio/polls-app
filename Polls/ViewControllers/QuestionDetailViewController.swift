@@ -32,6 +32,9 @@ class QuestionDetailViewController : UITableViewController {
   // MARK: UITableViewDelegate
 
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    if viewModel == nil {
+      return 0
+    }
     return 2
   }
 
@@ -44,21 +47,22 @@ class QuestionDetailViewController : UITableViewController {
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell ?? UITableViewCell(style: .Value1, reuseIdentifier: "Cell")
-
     if indexPath.section == 0 {
+      let cell = tableView.dequeueReusableCellWithIdentifier("QuestionCell") as! UITableViewCell
       cell.textLabel?.text = viewModel?.question
       cell.detailTextLabel?.text = nil
       cell.accessoryType = .None
-    } else {
-      cell.textLabel?.text = viewModel?.choice(indexPath.row)
-      cell.detailTextLabel?.text = viewModel?.votes(indexPath.row).description
+      return cell
+    }
 
-      if viewModel!.canVote(indexPath.row) {
-        cell.accessoryType = .DisclosureIndicator
-      } else {
-        cell.accessoryType = .None
-      }
+    let cell = tableView.dequeueReusableCellWithIdentifier("ChoiceCell") as! UITableViewCell
+    cell.textLabel?.text = viewModel?.choice(indexPath.row)
+    cell.detailTextLabel?.text = viewModel?.votes(indexPath.row).description
+
+    if viewModel!.canVote(indexPath.row) {
+      cell.accessoryType = .DisclosureIndicator
+    } else {
+      cell.accessoryType = .None
     }
 
     return cell
