@@ -127,6 +127,7 @@ class CreateQuestionViewController : UITableViewController {
   private func choiceCell(index:Int) -> UITableViewCell {
     let cell = TableTextViewCell(style: .Default, reuseIdentifier: "Choice")
     cell.textLabel?.text = "\(index + 1)"
+    cell.textLabel?.textColor = UIColor(red: 0.780, green: 0.780, blue: 0.800, alpha: 1)
     cell.textField?.text = choices[index]
     cell.block = {[unowned self] in
       self.choices[index] = cell.textField.text
