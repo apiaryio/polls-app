@@ -1,0 +1,2 @@
+This update adds support for the iPad.
+
