@@ -133,7 +133,7 @@ class QuestionListViewController : UITableViewController, QuestionDetailViewCont
   // MARK: QuestionDetailViewControllerDelegate
 
   func didCreateQuestion(viewController:CreateQuestionViewController) {
-    loadData()
+    tableView?.reloadData()
   }
 
   // MARK: UserPreferenceViewControllerDelegate

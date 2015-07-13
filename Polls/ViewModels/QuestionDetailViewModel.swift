@@ -13,8 +13,31 @@ import Hyperdrive
 
 /// View model for a specific question
 class QuestionDetailViewModel {
+  typealias DidUpdateCallback = (Representor<HTTPTransition>) -> ()
+
+  private let didUpdateCallback:DidUpdateCallback?
   private let hyperdrive:Hyperdrive
   private var representor:Representor<HTTPTransition>
+
+  var canReload:Bool {
+    return self.representor.transitions["self"] != nil
+  }
+
+  func reload(completion:((Result) -> ())) {
+    if let uri = self.representor.transitions["self"] {
+      hyperdrive.request(uri) { result in
+        switch result {
+        case .Success(let representor):
+          self.representor = representor
+          self.didUpdateCallback?(representor)
+        case .Failure(let error):
+          break
+        }
+
+        completion(result)
+      }
+    }
+  }
 
   private var choices:[Representor<HTTPTransition>] {
     return representor.representors["choices"] ?? []
@@ -25,9 +48,10 @@ class QuestionDetailViewModel {
     return representor.attributes["question"] as? String ?? "Question"
   }
 
-  init(hyperdrive:Hyperdrive, representor:Representor<HTTPTransition>) {
+  init(hyperdrive:Hyperdrive, representor:Representor<HTTPTransition>, didUpdateCallback:DidUpdateCallback? = nil) {
     self.hyperdrive = hyperdrive
     self.representor = representor
+    self.didUpdateCallback = didUpdateCallback
   }
 
   /// Returns the number of choices for the question
@@ -60,7 +84,7 @@ class QuestionDetailViewModel {
       hyperdrive.request(transition) { result in
         switch result {
         case .Success(let representor):
-          self.injectVoteResult(index, representor: representor)
+          self.update(choice: representor, index: index)
           completion(true)
         case .Failure(let error):
           println("Failed to vote \(error)")
@@ -73,19 +97,8 @@ class QuestionDetailViewModel {
   }
 
   /// Private methos for updating a choice at an index with the given representor
-  private func injectVoteResult(index:Int, representor:Representor<HTTPTransition>) {
-    var choices = self.choices
-    choices[index] = representor
-    var representor = self.representor
-
-    self.representor = Representor { builder in
-      for (key, value) in self.representor.attributes {
-        builder.addAttribute(key, value: value)
-      }
-
-      for choice in choices {
-        builder.addRepresentor("choices", representor: choice)
-      }
-    }
+  private func update(# choice:Representor<HTTPTransition>, index:Int) {
+    self.representor = self.representor.update("choices", representor: choice, index: index)
+    didUpdateCallback?(self.representor)
   }
 }
