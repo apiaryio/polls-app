@@ -1,0 +1,1 @@
+Polls is an application allowing you to view polls and vote in them.The application makes use of Hyperdrive, a generic Hypermedia and API Blueprint client. This application learns how the Polls API works at run-time and adapts it's user interface without any hard-coded knowledge about how the API is implemented, just an understanding of the semantics the API is using.
