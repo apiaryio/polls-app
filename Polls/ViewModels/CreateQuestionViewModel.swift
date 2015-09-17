@@ -26,11 +26,11 @@ class CreateQuestionViewModel {
   }
 
   /// Validates if the given question is valid
-  func validate(# question:String) -> Bool {
+  func validate(question  question:String) -> Bool {
     if let attribute = transition.attributes["question"] {
       let required = attribute.required ?? false
       if required {
-        return count(question) > 0
+        return !question.isEmpty
       }
     }
 
@@ -45,7 +45,7 @@ class CreateQuestionViewModel {
         self.didAddCallback?(representor)
         completion()
       case .Failure(let error):
-        println("Failure \(error)")
+        print("Failure \(error)")
         completion()
       }
     }

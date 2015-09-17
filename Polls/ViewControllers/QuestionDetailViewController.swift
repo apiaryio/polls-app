@@ -48,14 +48,14 @@ class QuestionDetailViewController : UITableViewController {
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     if indexPath.section == 0 {
-      let cell = tableView.dequeueReusableCellWithIdentifier("QuestionCell") as! UITableViewCell
+      let cell = tableView.dequeueReusableCellWithIdentifier("QuestionCell")!
       cell.textLabel?.text = viewModel?.question
       cell.detailTextLabel?.text = nil
       cell.accessoryType = .None
       return cell
     }
 
-    let cell = tableView.dequeueReusableCellWithIdentifier("ChoiceCell") as! UITableViewCell
+    let cell = tableView.dequeueReusableCellWithIdentifier("ChoiceCell")!
     cell.textLabel?.text = viewModel?.choice(indexPath.row)
     cell.detailTextLabel?.text = viewModel?.votes(indexPath.row).description
 
