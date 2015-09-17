@@ -43,11 +43,12 @@ class QuestionListViewModel {
 
   /// Load the root API resource using Hypermedia
   private func loadHypermedia(url:String, completion:((NSError?) -> ())) {
+    HTTPDeserialization.deserializers["application/vnd.hal+json"] = HTTPDeserialization.deserializers["application/hal+json"]
     hyperdrive = Hyperdrive()
     hyperdrive.enter(url) { result in
       switch result {
       case .Success(let representor):
-        if let questions = representor.transitions["questions"] {
+        if let questions = representor.transitions["questions"]?.first {
           self.loadQuestions(questions, completion: completion)
         } else {
           print("API does not support questions.")
@@ -66,7 +67,7 @@ class QuestionListViewModel {
       switch result {
       case .Success(let hyperdrive, let representor):
         self.hyperdrive = hyperdrive
-        if let questions = representor.transitions["questions"] {
+        if let questions = representor.transitions["questions"]?.first {
           self.loadQuestions(questions, completion: completion)
         } else {
           print("API does not support questions.")
@@ -85,7 +86,7 @@ class QuestionListViewModel {
       switch result {
       case .Success(let hyperdrive, let representor):
         self.hyperdrive = hyperdrive
-        if let questions = representor.transitions["questions"] {
+        if let questions = representor.transitions["questions"]?.first {
           self.loadQuestions(questions, completion: completion)
         } else {
           print("API does not support questions.")
@@ -120,7 +121,7 @@ class QuestionListViewModel {
 
   /// Returns a view model for creating a question if the user may create a question
   func createQuestionViewModel() -> CreateQuestionViewModel? {
-    if let transition = representor?.transitions["create"] {
+    if let transition = representor?.transitions["create"]?.first {
       return CreateQuestionViewModel(hyperdrive: hyperdrive, transition: transition, didAddCallback: didAddQuestionRepresentor)
     }
 

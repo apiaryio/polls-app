@@ -2,7 +2,9 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'Polls' do
-  pod 'Hyperdrive'
+  #pod 'Hyperdrive'
+  pod 'Hyperdrive', :git => 'https://github.com/the-hypermedia-project/Hyperdrive', :branch => 'kylef/multiple-transitions'
+  pod 'Representor', :git => 'https://github.com/the-hypermedia-project/representor-swift', :branch => 'kylef/jakub'
   pod 'SVProgressHUD'
   pod 'VTAcknowledgementsViewController'
   pod 'SimulatorStatusMagic', :configurations => ['Debug']
