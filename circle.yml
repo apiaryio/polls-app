@@ -2,3 +2,10 @@ machine:
   xcode:
     version: "7.0"
 
+test:
+  override:
+      - set -o pipefail &&
+        xcodebuild -workspace Polls.xcworkspace -scheme Polls test -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO |
+        tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+        xcpretty -c --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
+
