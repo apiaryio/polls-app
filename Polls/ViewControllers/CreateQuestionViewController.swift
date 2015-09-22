@@ -44,10 +44,10 @@ class CreateQuestionViewController : UITableViewController {
     SVProgressHUD.showInfoWithStatus(NSLocalizedString("QUESTION_CREATE_CREATING", comment: ""), maskType: .Gradient)
 
     func nonEmpty(choice:String) -> Bool {
-      return count(choice) > 0
+      return !choice.characters.isEmpty
     }
 
-    viewModel?.create(question, choices: filter(choices, nonEmpty)) {
+    viewModel?.create(question, choices: choices.filter(nonEmpty)) {
       SVProgressHUD.dismiss()
 
       if let delegate = self.delegate {
@@ -115,9 +115,9 @@ class CreateQuestionViewController : UITableViewController {
   private func questionCell() -> UITableViewCell {
     let cell = TableTextViewCell(style: .Default, reuseIdentifier: "Question")
     cell.textLabel?.text = NSLocalizedString("QUESTION_CREATE_QUESTION", comment: "")
-    cell.textField.text = question
+    cell.textField?.text = question
     cell.block = {[unowned self] in
-      self.question = cell.textField.text
+      self.question = cell.textField?.text ?? ""
       self.validate()
     }
     return cell
@@ -129,7 +129,7 @@ class CreateQuestionViewController : UITableViewController {
     cell.textLabel?.text = "\(index + 1)"
     cell.textField?.text = choices[index]
     cell.block = {[unowned self] in
-      self.choices[index] = cell.textField.text
+      self.choices[index] = cell.textField?.text ?? ""
     }
     return cell
   }

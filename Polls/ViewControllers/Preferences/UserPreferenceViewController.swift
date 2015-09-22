@@ -42,7 +42,7 @@ protocol UserPreferenceViewControllerDelegate {
     textField = UITextField()
     textField.borderStyle = .RoundedRect
     textField.backgroundColor = UIColor.whiteColor()
-    let segmentedItems = map(HyperdriveMode.allValues()) {
+    let segmentedItems = HyperdriveMode.allValues().map {
       $0.description
     }
     segmentedControl = UISegmentedControl(items: segmentedItems)
@@ -55,9 +55,9 @@ protocol UserPreferenceViewControllerDelegate {
     headerView.addSubview(label)
     headerView.addSubview(textField)
     headerView.addSubview(segmentedControl)
-    label.setTranslatesAutoresizingMaskIntoConstraints(false)
-    textField.setTranslatesAutoresizingMaskIntoConstraints(false)
-    segmentedControl.setTranslatesAutoresizingMaskIntoConstraints(false)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    segmentedControl.translatesAutoresizingMaskIntoConstraints = false
 
     headerView.addConstraints([
       NSLayoutConstraint(item: label, attribute: .Top, relatedBy: .Equal, toItem: headerView, attribute: .Top, multiplier: 1.0, constant: 20),
@@ -96,7 +96,7 @@ protocol UserPreferenceViewControllerDelegate {
 
   func presentAcknowledgements() {
     let acknowledgementsPath = NSBundle.mainBundle().pathForResource("Pods-Polls-acknowledgements", ofType: "plist")
-    let viewController = VTAcknowledgementsViewController(acknowledgementsPlistPath: acknowledgementsPath)
+    let viewController = VTAcknowledgementsViewController(acknowledgementsPlistPath: acknowledgementsPath)!
     viewController.headerText = NSLocalizedString("USER_PREFERENCES_ABOUT_ACKNOWLEDGEMENTS_HEADER", comment: "")
     navigationController?.pushViewController(viewController, animated: true)
   }
@@ -110,11 +110,11 @@ protocol UserPreferenceViewControllerDelegate {
     let mode = HyperdriveMode(rawValue: segmentedControl.selectedSegmentIndex)!
     switch mode {
     case .Hypermedia:
-      userDefaults.hypermediaURL = textField.text
+      userDefaults.hypermediaURL = textField.text ?? ""
     case .APIBlueprint:
-      userDefaults.apiBlueprintURL = textField.text
+      userDefaults.apiBlueprintURL = textField.text ?? ""
     case .Apiary:
-      userDefaults.apiaryDomain = textField.text
+      userDefaults.apiaryDomain = textField.text ?? ""
     }
   }
 
@@ -192,7 +192,7 @@ protocol UserPreferenceViewControllerDelegate {
 
   func versionCell() -> UITableViewCell {
     let cell = UITableViewCell(style: .Value1, reuseIdentifier: "VersionCell")
-    let infoDictionary = NSBundle.mainBundle().infoDictionary as! [String:AnyObject]
+    let infoDictionary = NSBundle.mainBundle().infoDictionary!
     let shortVersion = infoDictionary["CFBundleShortVersionString"] as! String
     let build = infoDictionary["CFBundleVersion"] as! String
     cell.textLabel?.text = NSLocalizedString("USER_PREFERENCES_ABOUT_VERSION", comment: "")

@@ -31,7 +31,7 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    if let selectedIndex = tableView.indexPathForSelectedRow() {
+    if let selectedIndex = tableView.indexPathForSelectedRow {
       tableView.deselectRowAtIndexPath(selectedIndex, animated: animated)
 
       transitionCoordinator()?.notifyWhenInteractionEndsUsingBlock { context in
@@ -43,9 +43,10 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
   }
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if let indexPath = tableView.indexPathForSelectedRow() {
+    if let indexPath = tableView.indexPathForSelectedRow {
       if let viewModel = self.viewModel?.questionDetailViewModel(indexPath.row),
-        viewController = segue.destinationViewController.topViewController as? QuestionDetailViewController
+        navigationController = segue.destinationViewController as? UINavigationController,
+        viewController = navigationController.topViewController as? QuestionDetailViewController
       {
         viewController.viewModel = viewModel
       }
@@ -118,7 +119,7 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
+    let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
     cell.textLabel?.text = viewModel?.question(indexPath.row)
     return cell
   }
@@ -151,7 +152,7 @@ class QuestionListViewController : UITableViewController, UISplitViewControllerD
 
   // MARK: UISplitViewControllerDelegate
 
-  func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController!, ontoPrimaryViewController primaryViewController: UIViewController!) -> Bool {
+  func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
     if let navigationController = secondaryViewController as? UINavigationController,
         viewController = navigationController.topViewController as? QuestionDetailViewController
     {

@@ -50,7 +50,7 @@ class QuestionListViewModel {
         if let questions = representor.transitions["questions"] {
           self.loadQuestions(questions, completion: completion)
         } else {
-          println("API does not support questions.")
+          print("API does not support questions.")
           completion(nil)
         }
 
@@ -69,7 +69,7 @@ class QuestionListViewModel {
         if let questions = representor.transitions["questions"] {
           self.loadQuestions(questions, completion: completion)
         } else {
-          println("API does not support questions.")
+          print("API does not support questions.")
           completion(nil)
         }
 
@@ -88,7 +88,7 @@ class QuestionListViewModel {
         if let questions = representor.transitions["questions"] {
           self.loadQuestions(questions, completion: completion)
         } else {
-          println("API does not support questions.")
+          print("API does not support questions.")
           completion(nil)
         }
 
@@ -145,19 +145,19 @@ class QuestionListViewModel {
   }
 
   /** Asyncronously delete a question at the given index
-  :param: index The question index
-  :param: completion A completion closure to call once the operation is complete
+  - parameter index: The question index
+  - parameter completion: A completion closure to call once the operation is complete
   */
   func delete(index:Int, completion:(() -> ())) {
     if let transition = questions?[index].transitions["delete"] {
       hyperdrive.request(transition) { result in
         switch result {
-        case .Success(let representor):
+        case .Success:
           var questions = self.questions!
           questions.removeAtIndex(index)
           self.representor = Representor(transitions: self.representor?.transitions, representors: ["questions": questions], attributes: self.representor?.attributes)
         case .Failure(let error):
-          println("Failed to delete: \(error)")
+          print("Failed to delete: \(error)")
         }
 
         completion()

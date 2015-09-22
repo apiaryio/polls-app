@@ -9,6 +9,7 @@
 import Foundation
 import Representor
 import Hyperdrive
+import Result
 
 
 /// View model for a specific question
@@ -23,14 +24,14 @@ class QuestionDetailViewModel {
     return self.representor.transitions["self"] != nil
   }
 
-  func reload(completion:((Result) -> ())) {
+  func reload(completion:((RepresentorResult) -> ())) {
     if let uri = self.representor.transitions["self"] {
       hyperdrive.request(uri) { result in
         switch result {
         case .Success(let representor):
           self.representor = representor
           self.didUpdateCallback?(representor)
-        case .Failure(let error):
+        case .Failure:
           break
         }
 
@@ -76,8 +77,8 @@ class QuestionDetailViewModel {
   }
 
   /** Asyncronously votes on a the choice at the given index
-  :param: index The question index
-  :param: completion A completion closure to call once the operation is complete
+  - parameter index: The question index
+  - parameter completion: A completion closure to call once the operation is complete
   */
   func vote(index:Int, completion:((Bool) -> ())) {
     if let transition = choices[index].transitions["vote"] {
@@ -87,7 +88,7 @@ class QuestionDetailViewModel {
           self.update(choice: representor, index: index)
           completion(true)
         case .Failure(let error):
-          println("Failed to vote \(error)")
+          print("Failed to vote \(error)")
           completion(false)
         }
       }
@@ -97,7 +98,7 @@ class QuestionDetailViewModel {
   }
 
   /// Private methos for updating a choice at an index with the given representor
-  private func update(# choice:Representor<HTTPTransition>, index:Int) {
+  private func update(choice  choice:Representor<HTTPTransition>, index:Int) {
     self.representor = self.representor.update("choices", representor: choice, index: index)
     didUpdateCallback?(self.representor)
   }

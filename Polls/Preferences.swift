@@ -10,7 +10,7 @@ import Foundation
 
 
 /// Available Hyperdrive modes that the application can be used with
-public enum HyperdriveMode : Int, Printable {
+public enum HyperdriveMode : Int, CustomStringConvertible {
   /// Straight up Hypermedia mode with Siren or HAL
   case Hypermedia
 
