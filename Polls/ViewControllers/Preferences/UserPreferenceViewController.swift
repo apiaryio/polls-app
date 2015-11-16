@@ -90,7 +90,7 @@ protocol UserPreferenceViewControllerDelegate {
 
   func done(sender:AnyObject!) {
     dismissViewControllerAnimated(true) {
-      delegate?.didChangePreferences(self)
+      self.delegate?.didChangePreferences(self)
     }
   }
 
