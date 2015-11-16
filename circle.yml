@@ -1,7 +1,3 @@
 machine:
   xcode:
-    version: "7.0"
-
-dependencies:
-  post:
-    - brew update && brew upgrade xctool
+    version: "7.1"
