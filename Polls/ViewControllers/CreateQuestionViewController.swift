@@ -80,7 +80,7 @@ class CreateQuestionViewController : UITableViewController {
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     switch (indexPath.section, indexPath.row) {
-    case (0, let row):
+    case (0, 0):
       return questionCell()
     case (1, choices.count):
       return addChoiceCell()
