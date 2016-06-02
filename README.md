@@ -2,7 +2,7 @@
 
 # Polls Client
 
-[![Circle CI Status](https://img.shields.io/circleci/project/apiaryio/polls-app.svg)](https://circleci.com/gh/apiaryio/polls-app/tree/master)
+[![Build Status](https://travis-ci.org/apiaryio/polls-app.svg?branch=master)](https://travis-ci.org/apiaryio/polls-app)
 
 This is a Swift iPhone and iPad client for the [Polls API](https://github.com/apiaryio/polls-api) - a simple application allowing users to view polls and vote in them.
 
