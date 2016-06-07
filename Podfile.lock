@@ -1,37 +1,14 @@
 PODS:
-  - Hyperdrive (0.2.0):
+  - Hyperdrive (0.3.0):
     - Representor (~> 0.7.0)
-    - Result (~> 0.6-beta.1)
+    - Result (~> 1.0)
     - URITemplate (~> 1.3)
-    - WebLinking (~> 1.0.0)
-  - Representor (0.7.0):
-    - Representor/Core (= 0.7.0)
-    - Representor/HTTP (= 0.7.0)
-  - Representor/Core (0.7.0)
-  - Representor/HTTP (0.7.0):
-    - Representor/HTTP/Adapters (= 0.7.0)
-    - Representor/HTTP/Deserialization (= 0.7.0)
-    - Representor/HTTP/Transition (= 0.7.0)
-  - Representor/HTTP/Adapters (0.7.0):
-    - Representor/HTTP/Adapters/APIBlueprint (= 0.7.0)
-    - Representor/HTTP/Adapters/HAL (= 0.7.0)
-    - Representor/HTTP/Adapters/Siren (= 0.7.0)
-  - Representor/HTTP/Adapters/APIBlueprint (0.7.0):
-    - Representor/HTTP/Transition
-  - Representor/HTTP/Adapters/HAL (0.7.0):
-    - Representor/HTTP/Transition
-  - Representor/HTTP/Adapters/Siren (0.7.0):
-    - Representor/HTTP/Transition
-  - Representor/HTTP/Deserialization (0.7.0):
-    - Representor/HTTP/Adapters/HAL
-    - Representor/HTTP/Adapters/Siren
-    - Representor/HTTP/Transition
-  - Representor/HTTP/Transition (0.7.0):
-    - Representor/Core
-  - Result (0.6-beta.1)
+    - WebLinking (~> 1.0)
+  - Representor (0.7.1)
+  - Result (1.0.2)
   - SimulatorStatusMagic (1.7)
   - SVProgressHUD (1.1.3)
-  - URITemplate (1.3.0)
+  - URITemplate (1.3.1)
   - VTAcknowledgementsViewController (0.15)
   - WebLinking (1.0.0)
 
@@ -42,13 +19,15 @@ DEPENDENCIES:
   - VTAcknowledgementsViewController
 
 SPEC CHECKSUMS:
-  Hyperdrive: 7362f6cf0f450db9af34fb5cdf54ef4ff8f06322
-  Representor: 487b4efb0a39c2c2db258d40846d9915cd69b770
-  Result: af24e3e57ab81005ec4221a53fd36dc1e7a52869
+  Hyperdrive: 8aa09b4e5451eea340b8e4c7111e82bb412e1b66
+  Representor: 36b6a2ecff4d9e5eebfc6f5cc5ec44403668381e
+  Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
   SimulatorStatusMagic: 46c90a12f73abeda6d7c16876e1e0998b6ca5f4f
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  URITemplate: 0ebbec80d1eb59a89e29db9b14c99d5908d3e574
+  URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
   VTAcknowledgementsViewController: 575f5841fb47b7d9c852ccb406104ea68de07b21
   WebLinking: d5b5ab4f7305bcf29821deb5cecd775f6c37efae
 
-COCOAPODS: 0.39.0.beta.4
+PODFILE CHECKSUM: 5727403843978f52edcb27add9e0b2e5bd0ebaaf
+
+COCOAPODS: 1.0.1
